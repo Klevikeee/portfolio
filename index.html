@@ -4,82 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfólió</title>
-
-
-<style>
-body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: azure;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-header{
-    background-color: rgb(75, 65, 65);
-    color:white;
-    padding:20px;
-    text-align: center;
-    font-size:20px;
-}
-section{
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius: 8px;
-    
-}
-h2{
-    border-bottom:2px solid grey;
-    padding-bottom:5px;
-    text-align: center;
-}
-summary, li {
-    font-size: 20px;
-    text-decoration: none;
-    margin: 5px;
-    background-color: lightblue;
-    padding: 8px; 
-    border-radius: 8px; 
-}
-
-li a{
-    text-decoration: none;
-    color:black;
-}
-li a:hover{
-    text-decoration:underline;
-}
-
-details[open] > summary {
-  background-color:rgb(117, 163, 163);
-  color: white;
-}
-</style>    
+    <link rel="stylesheet" href="style.css">
+ 
 </head>
-<body>
-    <header>Portfólió</header>
+<body class="mainbody">
+    <header class="mainheader">Portfólió</header>
 
 
-    <section>
+    <section class="mainsection">
         <h2>Bemutatkozás</h2>
         <p>Ez a weboldal a tanulmányaim során készített munkáimat és fejlődésemet mutatja be.</p>
     </section>
     
-    <section>
+    <section class="mainsection">
         <h2>Rólam</h2>
         <p>Kovács Leventének hívnak, a Vas Vármegyei SzC Gépipari és Informatikai Technikum 13. C osztályának tanulója vagyok, ipari informatikai technikus szakon. Érdeklődési köröm középpontjában az ipari automatizálás, PLC programozás,
 mikrovezérlők és a hálózati rendszerek állnak.
         </p>
     </section>
 
-    <section>
+    <section class="felsorolas mainsection">
         <h2>Munkáim</h2>
     <details>
     <summary>Mikrovezérlő programozás</summary>
         <ul>
-            <li><a href=".html">Sajt</a></li>
-            <li><a href=".html">Sajt</a></li>
+            <li><a href="ontozorendszermp.html">Automata öntözőrendszer</a></li>
+            <li><a href="arduinoeasyveep.html">EasyVeep program vezérlése Arduinoval</a></li>
             <li><a href=".html">Sajt</a></li>
         </ul>
     </details>
@@ -122,8 +72,8 @@ mikrovezérlők és a hálózati rendszerek állnak.
     <details>
     <summary>Nestlé gyakorlat </summary>
         <ul>
-            <li><a href=".html">Frekivalto</a></li>
-            <li><a href=".html">Sajt</a></li>
+            <li><a href="frekivalto.html">Villanymotor vezérlése frekvenciaváltóval és PLC-vel</a></li>
+            <li><a href=".html">Arduino </a></li>
             <li><a href=".html">Sajt</a></li>
 
         </ul>
