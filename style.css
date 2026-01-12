@@ -99,6 +99,12 @@ code{
     font-family: Consolas, monospace;
     font-size: 70%;
 }
+.cimsor{
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+}
+
 .navbar{
     background-color: #ffffff;
     padding: 20px 25px;
@@ -108,11 +114,6 @@ code{
     justify-content: center;
     position: relative;
     margin-bottom: 30px;
-}
-.cimsor{
-    font-size: 26px;
-    font-weight: bold;
-    color: #222;
 }
 
 
@@ -141,3 +142,4 @@ footer{
 .alklista{
     font-size:20px;
 }
+
