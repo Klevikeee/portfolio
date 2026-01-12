@@ -1,58 +1,143 @@
+
 body{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: rgba(53, 57, 59, 0.479);
-    max-width: 1200px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #eaeaea;
+    max-width: 1100px;
     margin: 0 auto;
     padding: 20px;
+    color: #222;
+    font-size:20px;
 }
 
 header{
-    background-color: rgb(255, 255, 255);
-    color:rgb(0, 0, 0);
-    padding:20px;
-    padding-bottom:20px;
+    background-color: #ffffff;
+    padding: 25px;
     text-align: center;
-    font-size:20px;
-    margin:20px;
-    border-radius: 8px;
-
-
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    border-radius: 10px;
 }
+
+
 section{
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius: 8px;
-    
+    background-color: #ffffff;
+    margin-bottom: 25px;
+    padding: 25px;
+    border-radius: 10px;
 }
+
 h2{
-    border-bottom:2px solid grey;
-    padding-bottom:5px;
     text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #ddd;
 }
 
-/* index.html gordulo lista formazasa */
+.felsorolas details{
+    margin-bottom: 15px;
+}
 
-.felsorolas summary,
-.felsorolas li {
+.felsorolas summary{
     font-size: 20px;
-    text-decoration: none;
-    margin: 5px;
-    background-color: rgb(0, 191, 255);
-    padding: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 12px 15px;
     border-radius: 8px;
-}
-.felsorolas li a {
-    text-decoration: none;
-    color: black;
+    background-color: #f5f5f5;
+    list-style: none;
 }
 
-.felsorolas li a:hover {
+.felsorolas details[open] > summary{
+    background-color: #dcdcdc;
+}
+
+.felsorolas ul{
+    margin-top: 10px;
+    padding-left: 20px;
+}
+
+.felsorolas li{
+    font-size: 18px;
+    margin: 8px 0;
+}
+
+.felsorolas li a{
+    text-decoration: none;
+    color: #333;
+}
+
+.felsorolas li a:hover{
     text-decoration: underline;
 }
 
-.felsorolas details[open] > summary {
-  background-color:rgb(8, 151, 151);
-  color: white;
+.kozep{
+    display: block;
+    margin: 20px auto;
+    width: 55%;
+    transition: width 0.3s ease;
+    cursor:pointer;
 }
 
+.zoom.nagy{
+    width: 90%;
+}
+.comment{
+    font-size: 12px;
+    color:rgb(150, 150, 150);
+    color:#222
+}
+pre{
+    background-color: #808080;
+    border-radius: 10px;
+    color: white;
+    padding: 15px 25px;
+}
+
+code{
+    font-family: Consolas, monospace;
+    font-size: 70%;
+}
+.navbar{
+    background-color: #ffffff;
+    padding: 20px 25px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+.cimsor{
+    font-size: 26px;
+    font-weight: bold;
+    color: #222;
+}
+
+
+.homegomb{
+    position: absolute;
+    left: 25px;
+    text-decoration: none;
+    color: #222;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    font-size:20px;
+}
+
+.homegomb:hover{
+    background-color: #dcdcdc;
+}
+
+footer{
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size:15px
+}
+
+.alklista{
+    font-size:20px;
+}
