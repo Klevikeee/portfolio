@@ -93,7 +93,14 @@ pre{
     color: white;
     padding: 15px 25px;
     overflow-x: auto;
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+    box-sizing: border-box;
 }
+
+
 
 code{
     font-family: Consolas, monospace;
