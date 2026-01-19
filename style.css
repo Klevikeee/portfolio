@@ -93,6 +93,7 @@ pre{
     border-radius: 10px;
     color: white;
     padding: 15px 25px;
+    overflow-x: auto;
 }
 
 code{
@@ -142,4 +143,5 @@ footer{
 .alklista{
     font-size:20px;
 }
+
 
