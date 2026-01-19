@@ -78,10 +78,21 @@ h2{
     transition: width 0.3s ease;
     cursor:pointer;
 }
+.zoom{
+    max-width: 100%;
+    cursor: pointer;
+}
 
 .zoom.nagy{
-    width: 90%;
-}
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    max-width: 95vw;
+    max-height: 95vh;
+    width: auto;
+    height: auto;}
+
 .comment{
     font-size: 12px;
     color:rgb(150, 150, 150);
