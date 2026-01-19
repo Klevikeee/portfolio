@@ -79,12 +79,7 @@ h2{
     cursor:pointer;
 }
 .zoom.nagy{
-    display: block;
-    margin: 20px auto;
-    width: 55%;
-    max-width: 600px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
+    width: 90%;
 }
 
 .comment{
