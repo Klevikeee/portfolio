@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script.js"></script>
+</head>
+
+<body class="mainbody">
+
+    <header class="navbar">
+        <a href="index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">Hálózatkezelés</span>
+    </header>
+    <section class="mainsection">
+        <h2>Ecosoft Bt. hálózati projekt</h2>
+        <h3>Feladat leirása:</h3>
+        <ul>
+            <li>
+                Az EcoSoft Bt. egy helyi szoftverfejlesztő cég, amely egy irodaház két szintjén (Épület A és Épület B)
+                működik. A két épület között kábeles összeköttetés van. Mindkét épület saját alhálózattal rendelkezik. A
+                rendszernek biztosítania kell az eszközök közötti kommunikációt. Mindkét épület saját IP címtartománnyal
+                és DHCP szolgáltatással rendelkezik a kliens eszközök automatikus konfigurálásához. A hálózat nem
+                csatlakozik az internethez; elsődleges célja a két épületben található eszközök közötti biztonságos és
+                megbízható kommunikáció lehetővé tétele. Vezeték nélküli hozzáférést különálló WiFi routerek
+                biztosítanak, amelyek Access Point (AP) módban működnek.
+            </li>
+        </ul>
+    </section>
+    
+    <section class="mainsection">
+        <h3>Hálózati topológia:</h3>
+        <img class="kozep zoom"  src="images/topologia.png" alt="Hálózati topológia" title="Hálózati topológia">
+    </section>
+
+    <section class="mainsection">
+        <h3>Épület A hálózati címzése</h3>
+        <table>
+            <tr>
+                <p></p>
+            </tr>
+        </table>
+    </section>
+        <section class="mainsection">
+        <h3>Épület B hálózati címzése</h3>
+        <table>
+            <tr>
+                <p></p>
+            </tr>
+        </table>
+    </section>
+        <section class="mainsection">
+        <h3>Router összeköttetés (IP routing) címzése</h3>
+        <table>
+            <tr>
+                <p></p>
+            </tr>
+        </table>
+    </section>
+
+
+    <section class="mainsection">
+        <h3>Megvalósítás leírása</h3>
+        <h4>1. A hálózat prototípusának felépítése</h4>
+        <p>Felépítjük a hálózatot a szimulációs program segítségével. Az eszközöket úgy választjuk ki, hogy:</p>
+        <ul>
+            <li>Az EpuletA Router és az EpuletB Router legalább egy Ethernet és egy soros interfésszel rendelkezzen. </li>
+            <li>A kapcsolók legalább 8 portosak legyenek, hogy minden eszközt kiszolgáljanak. </li>
+            <li>A vezeték nélküli hálózatot WiFi routerekkel valósítjuk meg, AP (Access Point) módban.  </li>
+            <li>A WiFi-képes eszközöket (pl. laptop, telefon) használjuk a vezeték nélküli kliensek szimulálására.</li>
+
+        </ul>
+        <h4>2. Az eszközök összekapcsolása</h4>
+        <p>Csatlakoztatjuk az eszközöket a topológiai ábra alapján:</p>
+        <ul>
+            <li>Épület A minden eszközét egy kapcsolóra kötjük, amely az EpuletA Routerhez kapcsolódik Ethernet porton.</li>
+            <li>Az EpuletAWiFi routert egy szabad Ethernet porton keresztül csatlakoztatjuk az EpuletA Routerhez.</li>
+            <li>Épület B-ben ugyanígy csatlakoztatjuk az eszközöket a helyi kapcsolóhoz, onnan pedig az EpuletB Routerhez. A WiFi router is Ethernet porton kapcsolódik.</li>
+            <li>A két épület között soros kapcsolaton keresztül biztosítjuk az összeköttetést a routerek között.</li>
+</li>
+        </ul>
+
+        <h4>3. Az IP-paraméterek kiosztása</h4>
+        <p>Beállítjuk az IP-címeket az előírt táblázat alapján:</p>
+        <ul>
+            <li>Az eszközökön megadjuk a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
+            <li>A DHCP szolgáltatást mindkét épület routerén beállítjuk úgy, hogy az eszközök automatikusan kapják meg a megfelelő konfigurációt.</li>
+            <li>Az eszközök nevét is beállítjuk a megadottak szerint (pl. „EpuletA_PC1”, „EpuletB_Laptop”).</li>
+        </ul>
+        
+        <h4>4. A routerek közötti IP routing engedélyezése</h4>
+        <p>A két router között bekapcsoljuk az IP routingot, hogy lehetővé tegyük az eszközök közötti kommunikációt a különböző alhálózatokban.</p>
+        <ul>
+            <li>Az eszközökön megadjuk a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
+                <ul>
+                    <li>EpuletA Router (Se0/1/0): 172.16.0.1 /30</li>
+                    <li>EpuletB Router (Se0/1/0): 172.16.0.2 /30</li>
+                </ul>
+            <li>Teszteljük, hogy a routerek látják egymást ezen a kapcsolaton.</li>
+        </ul>
+        <h4>5. DHCP szolgáltatás beállítása</h4>
+        <p>Mindkét épület routerén konfiguráljuk a DHCP szolgáltatást:</p>
+        <ul>
+            <li>Meghatározzuk a DHCP tartományt úgy, hogy a fix IP-című eszközök ne kerüljenek kiosztásra.</li>
+            <li>Beállítjuk az alapértelmezett átjárót és alhálózati maszkot a DHCP kiszolgálásban.</li>
+        </ul>
+
+        <h4>6. A WiFi hálózat beállítása</h4>
+        <p>Az EpuletAWiFi és EpuletBWiFi routereket AP módban állítjuk be:</p>
+        <ul>
+            <li>Meghatározzuk az SSID-t (pl. EpuletA_WiFi, EpuletB_WiFi).</li>
+            <li>WPA2 jelszavas titkosítást alkalmazunk a hálózat védelmére.</li>
+            <li>A WiFi kliensek automatikusan DHCP segítségével csatlakoznak.</li>
+
+        </ul>
+
+            <h4>7. A hálózat működésének ellenőrzése</h4>
+        <p>Teszteljük a beállításokat:</p>
+        <ul>
+            <li>Ellenőrizzük, hogy minden DHCP-re állított eszköz helyes IP-címet kapott-e.</li>
+            <li>Pingeléssel ellenőrizzük a két épület eszközei közötti kapcsolatot.</li>
+            <li>Meggyőződünk arról, hogy a WiFi-re csatlakozó eszközök is elérik a másik épület eszközeit.</li>
+            <li>Teszteljük a routerek közötti soros kapcsolat működését.</li>
+
+        </ul>
+
+            <h4>8. Konfiguráció mentése</h4>
+        <p>Minden eszközön elmentjük a konfigurációt, hogy a beállítások újraindítás után is megmaradjanak.</p>
+       </section>
+</body>
+
+
+</html>
