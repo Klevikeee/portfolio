@@ -40,97 +40,184 @@
         <h3>Épület A hálózati címzése</h3>
         <table>
             <tr>
-                <p></p>
+                <td><strong>Eszköz neve</strong></td>
+                <td><strong>IP-cím</strong></td>
+                <td><strong>Alhálózati maszk</strong></td>
+                <td><strong>Alapértelmezett átjáró</strong></td>
+            </tr>
+            <tr>
+                <td>EpuletA Router</td>
+                <td>192.168.1.1</td>
+                <td>255.255.255.0</td>
+                <td>----------------</td>
+            </tr>
+            <tr>
+                <td>EpuletAWiFi (AP)</td>
+                <td>192.168.1.3</td>
+                <td>255.255.255.0</td>
+                <td>192.168.1.1</td>
+            </tr>
+            <tr>
+                <td>EpuletA_PC1</td>
+                <td>DHCP</td>
+                <td>DHCP</td>
+                <td>192.168.1.1</td>
+            </tr>
+            <tr>
+                <td>EpuletA_PC2</td>
+                <td>DHCP</td>
+                <td>DHCP</td>
+                <td>192.168.1.1</td>
+            </tr>
+            <tr>
+                <td>EpuletA_Telefon</td>
+                <td>DHCP</td>
+                <td>DHCP</td>
+                <td>192.168.1.1</td>
+            </tr>
+            <tr>
+                <td>EpuletA_Laptop</td>
+                <td>DHCP</td>
+                <td>DHCP</td>
+                <td>192.168.1.1</td>
             </tr>
         </table>
     </section>
         <section class="mainsection">
         <h3>Épület B hálózati címzése</h3>
-        <table>
-            <tr>
-                <p></p>
-            </tr>
-        </table>
+            <table>
+                <tr>
+                    <td><strong>Eszköz neve</strong></td>
+                    <td><strong>IP-cím</strong></td>
+                    <td><strong>Alhálózati maszk</strong></td>
+                    <td><strong>Alapértelmezett átjáró</strong></td>
+                </tr>
+                <tr>
+                    <td>EpuletB Router</td>
+                    <td>10.0.0.2</td>
+                    <td>255.255.255.240</td>
+                    <td>----------------</td>
+                </tr>
+                <tr>
+                    <td>EpuletBWiFi (AP)</td>
+                    <td>10.0.0.3</td>
+                    <td>255.255.255.240</td>
+                    <td>10.0.0.2</td>
+                </tr>
+                <tr>
+                    <td>EpuletB_PC1</td>
+                    <td>DHCP</td>
+                    <td>DHCP</td>
+                    <td>10.0.0.2</td>
+                </tr>
+                <tr>
+                    <td>EpuletB_PC2</td>
+                    <td>DHCP</td>
+                    <td>DHCP</td>
+                    <td>10.0.0.2</td>
+                </tr>
+                <tr>
+                    <td>EpuletB_Telefon</td>
+                    <td>DHCP</td>
+                    <td>DHCP által kiosztott</td>
+                    <td>10.0.0.2</td>
+                </tr>
+                <tr>
+                    <td>EpuletB_Laptop</td>
+                    <td>DHCP</td>
+                    <td>DHCP által kiosztott</td>
+                    <td>10.0.0.2</td>
+                </tr>
+            </table>
     </section>
         <section class="mainsection">
         <h3>Router összeköttetés (IP routing) címzése</h3>
-        <table>
-            <tr>
-                <p></p>
-            </tr>
-        </table>
+            <table>
+                <tr>
+                    <td><strong>Eszköz neve</strong></td>
+                    <td><strong>IP-cím</strong></td>
+                    <td><strong>Alhálózati maszk</strong></td>
+                </tr>
+                <tr>
+                    <td>EpuletA Router (Se0/1/0)</td>
+                    <td>172.16.0.1</td>
+                    <td>255.255.255.252</td>
+                </tr>
+                <tr>
+                    <td>EpuletB Router (Se0/1/0)</td>
+                    <td>172.16.0.2</td>
+                    <td>255.255.255.252</td>
+                </tr>
+            </table>
     </section>
 
 
     <section class="mainsection">
+ <section class="mainsection">
         <h3>Megvalósítás leírása</h3>
         <h4>1. A hálózat prototípusának felépítése</h4>
-        <p>Felépítjük a hálózatot a szimulációs program segítségével. Az eszközöket úgy választjuk ki, hogy:</p>
+        <p>Felépítettem a hálózatot a szimulációs program segítségével. Az eszközöket úgy választottam ki, hogy:</p>
         <ul>
             <li>Az EpuletA Router és az EpuletB Router legalább egy Ethernet és egy soros interfésszel rendelkezzen. </li>
             <li>A kapcsolók legalább 8 portosak legyenek, hogy minden eszközt kiszolgáljanak. </li>
-            <li>A vezeték nélküli hálózatot WiFi routerekkel valósítjuk meg, AP (Access Point) módban.  </li>
-            <li>A WiFi-képes eszközöket (pl. laptop, telefon) használjuk a vezeték nélküli kliensek szimulálására.</li>
-
+            <li>A vezeték nélküli hálózatot WiFi routerekkel valósítottam meg, AP (Access Point) módban.  </li>
+            <li>A WiFi-képes eszközöket (pl. laptop, telefon) használtam a vezeték nélküli kliensek szimulálására.</li>
         </ul>
+
         <h4>2. Az eszközök összekapcsolása</h4>
-        <p>Csatlakoztatjuk az eszközöket a topológiai ábra alapján:</p>
+        <p>Csatlakoztattam az eszközöket a topológiai ábra alapján:</p>
         <ul>
-            <li>Épület A minden eszközét egy kapcsolóra kötjük, amely az EpuletA Routerhez kapcsolódik Ethernet porton.</li>
-            <li>Az EpuletAWiFi routert egy szabad Ethernet porton keresztül csatlakoztatjuk az EpuletA Routerhez.</li>
-            <li>Épület B-ben ugyanígy csatlakoztatjuk az eszközöket a helyi kapcsolóhoz, onnan pedig az EpuletB Routerhez. A WiFi router is Ethernet porton kapcsolódik.</li>
-            <li>A két épület között soros kapcsolaton keresztül biztosítjuk az összeköttetést a routerek között.</li>
-</li>
+            <li>Épület A minden eszközét egy kapcsolóra kötöttem, amely az EpuletA Routerhez kapcsolódik Ethernet porton.</li>
+            <li>Az EpuletAWiFi routert egy szabad Ethernet porton keresztül csatlakoztattam az EpuletA Routerhez.</li>
+            <li>Épület B-ben ugyanígy csatlakoztattam az eszközöket a helyi kapcsolóhoz, onnan pedig az EpuletB Routerhez. A WiFi router is Ethernet porton kapcsolódik.</li>
+            <li>A két épület között soros kapcsolaton keresztül biztosítottam az összeköttetést a routerek között.</li>
         </ul>
 
         <h4>3. Az IP-paraméterek kiosztása</h4>
-        <p>Beállítjuk az IP-címeket az előírt táblázat alapján:</p>
+        <p>Beállítottam az IP-címeket az előírt táblázat alapján:</p>
         <ul>
-            <li>Az eszközökön megadjuk a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
-            <li>A DHCP szolgáltatást mindkét épület routerén beállítjuk úgy, hogy az eszközök automatikusan kapják meg a megfelelő konfigurációt.</li>
-            <li>Az eszközök nevét is beállítjuk a megadottak szerint (pl. „EpuletA_PC1”, „EpuletB_Laptop”).</li>
+            <li>Az eszközökön megadtam a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
+            <li>A DHCP szolgáltatást mindkét épület routerén beállítottam úgy, hogy az eszközök automatikusan kapják meg a megfelelő konfigurációt.</li>
+            <li>Az eszközök nevét is beállítottam a megadottak szerint (pl. EpuletA_PC1, EpuletB_Laptop).</li>
         </ul>
         
         <h4>4. A routerek közötti IP routing engedélyezése</h4>
-        <p>A két router között bekapcsoljuk az IP routingot, hogy lehetővé tegyük az eszközök közötti kommunikációt a különböző alhálózatokban.</p>
+        <p>A két router között bekapcsoltam az IP routingot, hogy lehetővé tegyem az eszközök közötti kommunikációt a különböző alhálózatokban.</p>
         <ul>
-            <li>Az eszközökön megadjuk a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
+            <li>Az eszközökön megadtam a fix IP-címeket, alhálózati maszkokat, és alapértelmezett átjárókat.</li>
                 <ul>
                     <li>EpuletA Router (Se0/1/0): 172.16.0.1 /30</li>
                     <li>EpuletB Router (Se0/1/0): 172.16.0.2 /30</li>
                 </ul>
-            <li>Teszteljük, hogy a routerek látják egymást ezen a kapcsolaton.</li>
+            <li>Teszteltem, hogy a routerek látják egymást ezen a kapcsolaton.</li>
         </ul>
+
         <h4>5. DHCP szolgáltatás beállítása</h4>
-        <p>Mindkét épület routerén konfiguráljuk a DHCP szolgáltatást:</p>
+        <p>Mindkét épület routerén konfiguráltam a DHCP szolgáltatást:</p>
         <ul>
-            <li>Meghatározzuk a DHCP tartományt úgy, hogy a fix IP-című eszközök ne kerüljenek kiosztásra.</li>
-            <li>Beállítjuk az alapértelmezett átjárót és alhálózati maszkot a DHCP kiszolgálásban.</li>
+            <li>Meghatároztam a DHCP tartományt úgy, hogy a fix IP-című eszközök ne kerüljenek kiosztásra.</li>
+            <li>Beállítottam az alapértelmezett átjárót és alhálózati maszkot a DHCP kiszolgálásban.</li>
         </ul>
 
         <h4>6. A WiFi hálózat beállítása</h4>
-        <p>Az EpuletAWiFi és EpuletBWiFi routereket AP módban állítjuk be:</p>
+        <p>Az EpuletAWiFi és EpuletBWiFi routereket AP módban állítottam be:</p>
         <ul>
-            <li>Meghatározzuk az SSID-t (pl. EpuletA_WiFi, EpuletB_WiFi).</li>
-            <li>WPA2 jelszavas titkosítást alkalmazunk a hálózat védelmére.</li>
+            <li>Meghatároztam az SSID-t (pl. EpuletA_WiFi, EpuletB_WiFi).</li>
+            <li>WPA2 jelszavas titkosítást alkalmaztam a hálózat védelmére.</li>
             <li>A WiFi kliensek automatikusan DHCP segítségével csatlakoznak.</li>
-
         </ul>
 
             <h4>7. A hálózat működésének ellenőrzése</h4>
-        <p>Teszteljük a beállításokat:</p>
+        <p>Teszteltem a beállításokat:</p>
         <ul>
-            <li>Ellenőrizzük, hogy minden DHCP-re állított eszköz helyes IP-címet kapott-e.</li>
-            <li>Pingeléssel ellenőrizzük a két épület eszközei közötti kapcsolatot.</li>
-            <li>Meggyőződünk arról, hogy a WiFi-re csatlakozó eszközök is elérik a másik épület eszközeit.</li>
-            <li>Teszteljük a routerek közötti soros kapcsolat működését.</li>
-
+            <li>Ellenőriztem, hogy minden DHCP-re állított eszköz helyes IP-címet kapott-e.</li>
+            <li>Pingeléssel ellenőriztem a két épület eszközei közötti kapcsolatot.</li>
+            <li>Meggyőződtem arról, hogy a WiFi-re csatlakozó eszközök is elérik a másik épület eszközeit.</li>
+            <li>Teszteltem a routerek közötti soros kapcsolat működését.</li>
         </ul>
 
             <h4>8. Konfiguráció mentése</h4>
-        <p>Minden eszközön elmentjük a konfigurációt, hogy a beállítások újraindítás után is megmaradjanak.</p>
-       </section>
+        <p>Minden eszközön elmentettem a konfigurációt, hogy a beállítások újraindítás után is megmaradjanak.</p>
+    </section>
 </body>
-
-
 </html>
