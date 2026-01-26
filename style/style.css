@@ -149,3 +149,21 @@ footer{
 .alklista{
     font-size:20px;
 }
+table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+    }
+    th, td {
+        border: 1px solid #ccc; /* Szürke keret */
+        padding: 10px;
+        text-align: center; /* Középre igazítás */
+    }
+    th {
+        background-color: #f9f9f9; /* Halvány háttér a fejlécnek */
+        font-weight: bold;
+    }
+    /* Az első oszlop (Eszköz neve) legyen balra igazítva, ahogy általában szokás */
+    td:first-child {
+        text-align: left;
+    }
