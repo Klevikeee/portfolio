@@ -27,18 +27,84 @@
 <section class="mainsection">
     <h3>Megvalósitás</h3>
         <ul>
-            <li>A feladat megvalósítása egy ESP32 mikrokontrollerrel történt. Először egy alap programkóddal teszteltem a nedvességérzékelő szenzort, ezután mértem száraz/nedves földet, és ez alapján meghatároztam a "szaraz", "nedves" , "inditas" és "leallitas" változót
+            <li>A feladat megvalósítása egy Arduino UNO mikrokontrollerrel történt.
                 <pre><code>
 void setup() {
-pinMode(5, OUTPUT);
-Serial.begin(9600);
+  pinMode(13, OUTPUT);
+  pinMode(A0, OUTPUT);
+  pinMode(A1, OUTPUT);
+  pinMode(A2, OUTPUT);
+  pinMode(A3, OUTPUT);
+  pinMode(A4, OUTPUT);
+  pinMode(A5, OUTPUT);
+  pinMode(10, OUTPUT);
+  digitalWrite(13, LOW);
+  digitalWrite(A0, LOW);
+  digitalWrite(A1, LOW);
+  digitalWrite(A2, LOW);
+  digitalWrite(A3, LOW);
+  digitalWrite(A4, LOW);
+  digitalWrite(A5, LOW);
+  digitalWrite(10, LOW);
+    for (int pin = 2; pin <= 9; pin++) {
+        pinMode(pin, INPUT); 
+    }
+  
 }
+// I0.0 = 2 -> Jobb sorompó lent          Q0.0 = 13 ->Jobb sorompo fel
+// I0.1 = 3 -> Jobb sorompo fent          Q0.1 = A0 -> Bal sorompo fel
+// I0.2 = 4 -> Bal sorompo lent           Q0.2 = A1 -> Lampa (BEFELE) piros
+// I0.3 = 5 -> Bal sorompo fent           Q0.3 = A2 -> Lampa (BEFELE) zold
+// I0.4 = 6 -> Auto jobb soromponal       Q0.4 = A3 -> Lampa (KIFELE) piros
+// I0.5 = 7 -> Auto bal soromponal        Q0.5 = A4- > Lampa (KIFELE) zold
+int allapot = 0; // BAL 
+int allapot2 = 0; //JOBB
 void loop() {
-int nedvesseg = analogRead(5);
-Serial.print("Nedvesseg: ");
 
-Serial.println(nedvesseg);
+if (digitalRead(6) != 1 && digitalRead(2) != 1) { // ha auto jobbrol es sorompo lent es balrol nem?
+  allapot2 = 1;
 }
+if (digitalRead(7) != 1 && digitalRead(5) != 1) { // ha auto balrol es sorompo lent és jobbrol nem?
+  allapot = 2;
+}
+if (allapot == 0) {
+    digitalWrite(13, LOW);
+    digitalWrite(A0, LOW);  // Bal sorompo fent
+    digitalWrite(A3, HIGH); // Lampa kifele piros
+    digitalWrite(A1, HIGH); // Lámpa befele piros
+}
+
+while (allapot2 == 0) {
+    digitalWrite(13, LOW);
+    digitalWrite(A0, LOW);  // Bal sorompo fent
+    digitalWrite(A3, HIGH); // Lampa kifele piros
+    digitalWrite(A1, HIGH); // Lámpa befele piros
+}
+if (allapot2 == 1){
+  digitalWrite(A1, LOW);  // Piros lampa kikapcsol
+  digitalWrite(A2, HIGH); // zold lámpa bekapcsol
+  while (digitalRead(6) == 1) { // amig auto jobbrol aktiv
+    digitalWrite(13, HIGH); // jobb sorompot fel
+ }
+  digitalWrite(13, LOW); // sorompo le
+  digitalWrite(A2, LOW); // zold lampa ki
+  digitalWrite(A1,HIGH); // piros lampa be
+  allapot2 = 0;
+}
+if (allapot == 2){
+  digitalWrite(A3, LOW);  // Piros lampa kikapcsol
+  digitalWrite(A4, HIGH); // zold lámpa bekapcsol
+  while (digitalRead(7) == 1) { // amig auto balrol aktiv
+    digitalWrite(A0, HIGH); // bal sorompot fel
+ }
+  digitalWrite(A0, LOW); // sorompo le
+  digitalWrite(A4, LOW); // zold lampa ki
+  digitalWrite(A3,HIGH); // piros lampa be
+  allapot = 0;
+}
+}
+
+
 }
                 </code></pre>
                 Ezután elkészült a kapcsolási rajz, utána pedig teszteltem a programot.
