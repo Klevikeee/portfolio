@@ -36,7 +36,71 @@
             <li><strong>1 végrehajtó</strong> a fehér jelzés kapcsolására </li>
         </ul>
     </section>
-
+    <section class="mainsection">
+        <h3>Tag táblázat</h3>
+        <table>
+    <tr>
+        <th>Változó neve</th>
+        <th>Adattípus</th>
+        <th>PLC cím</th>
+    </tr>
+    <tr>
+        <td>vonat atjaro jobb</td>
+        <td>Bool</td>
+        <td>%I0.0</td>
+    </tr>
+    <tr>
+        <td>vonat atjaro bal</td>
+        <td>Bool</td>
+        <td>%I0.1</td>
+    </tr>
+    <tr>
+        <td>vonat jobbrol</td>
+        <td>Bool</td>
+        <td>%I0.2</td>
+    </tr>
+    <tr>
+        <td>vonat balrol</td>
+        <td>Bool</td>
+        <td>%I0.3</td>
+    </tr>
+    <tr>
+        <td>jobb sorompo fent</td>
+        <td>Bool</td>
+        <td>%I0.4</td>
+    </tr>
+    <tr>
+        <td>jobb sorompo lent</td>
+        <td>Bool</td>
+        <td>%I0.5</td>
+    </tr>
+    <tr>
+        <td>bal sorompo fent</td>
+        <td>Bool</td>
+        <td>%I0.6</td>
+    </tr>
+    <tr>
+        <td>bal sorompo lent</td>
+        <td>Bool</td>
+        <td>%I0.7</td>
+    </tr>
+    <tr>
+        <td>sorompo leengedese</td>
+        <td>Bool</td>
+        <td>%Q0.0</td>
+    </tr>
+    <tr>
+        <td>feher jelzes</td>
+        <td>Bool</td>
+        <td>%Q0.1</td>
+    </tr>
+    <tr>
+        <td>piros jelzes</td>
+        <td>Bool</td>
+        <td>%Q0.2</td>
+    </tr>
+</table>
+    </section>
     <section class="mainsection">
         <h3>Megvalósítás:</h3>
         <p>S7 - 1200 PLC-n LAD programozási nyelvben</p>
@@ -44,6 +108,20 @@
         <img src="images/vasuti2.png" alt="Létra diagram 2" class="kozep zoom">
         <img src="images/vasuti3.png" alt="Létra diagram 3" class="kozep zoom">
     </section>
+    <div class="felsorolas">
+        <h4>A vezérlés logikája és felépítése:</h4>
+        <p>A feladat megoldása során egy <strong>kombinációs logikára</strong> épülő vezérlést valósítottam meg. A rendszer memóriatárolás (Set/Reset) nélkül, a bejövő szenzoradatok pillanatnyi állapota alapján, valós időben hoz döntéseket a kimenetekről:</p>
+        <ul>
+            <li><strong>Közvetlen beavatkozás (Zárás):</strong> A program folyamatosan figyeli az előjelző érzékelőket. Amint bármelyik irányból (jobbról vagy balról) vonat közeledik, a logika azonnal reagál: megszakítja a fehér jelzést, bekapcsolja a piros villogót és elindítja a sorompó leengedését.</li>
+            <li><strong>Feltételhez kötött alaphelyzet (Nyitás):</strong> A sorompó mindaddig zárva marad és a piros jelzés aktív, amíg a vonatot az érzékelők a zónában látják. Amint a szerelvény teljesen elhagyta az átjárót (megszűnik az érzékelés), a kimenetek kikapcsolnak, és a vezérlés visszaállítja a biztonságos alapállapotot (fehér fény világít, sorompó nyitható).</li>
+        </ul>
+    </div>
+    <section class="mainsection">
+    <h3>Videó a szimulációról</h3>
+    <video controls playsinline>
+      <source src="videos/VasutiAtjaro.mp4" type="video/mp4">
+    </video>
+</section>
 
 </body>
 </html>
