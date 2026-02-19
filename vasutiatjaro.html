@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+        <a href="index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">PLC programozás</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>EasyVeep - Vasúti átjáró szimuláció</h2>
+        <h3>Feladat leírása:</h3>
+        <p>A sorompóval ellátott vasúti átjárót a vonatok mindkét irányból megközelíthetik. Vonat közeledésekor a sorompót időben le kell engedni, a jelzőlámpát pedig a vágányjelző egység segítségével pirosra kell váltani. Amikor a vonat elhagyta az átjárót, és nem érkezik újabb vonat, a sorompó újra felnyitható, a jelzőlámpa pedig átkapcsolható.</p>
+        
+        <h4>A rendszer bemenetei (érzékelők):</h4>
+        <ul>
+            <li><strong>2 érzékelő</strong> a vonatok érkezésének előre jelzésére (jobbról, balról)</li>
+            <li><strong>2 érzékelő</strong> a jobbról és balról érkező vonatok jelzésére, ha azok még az átjáróban vannak</li>
+            <li><strong>2 érzékelő</strong> a felemelt sorompók helyzetének jelzésére (jobb, bal)</li>
+            <li><strong>2 érzékelő</strong> a leengedett sorompók helyzetének jelzésére</li>
+        
+
+        </ul>
+        <h4>A rendszer kimenetei (végrehajtók):</h4>
+        <ul>
+            <li><strong>1 végrehajtó</strong> a sorompó leengedésére</li>
+            <li><strong>1 végrehajtó</strong> a piros jelzés kapcsolására</li>
+            <li><strong>1 végrehajtó</strong> a fehér jelzés kapcsolására </li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>S7 - 1200 PLC-n LAD programozási nyelvben</p>
+        <img src="vasuti1.png" alt="Sorompó vezérlés létra diagram">
+    </section>
+
+</body>
+</html>
