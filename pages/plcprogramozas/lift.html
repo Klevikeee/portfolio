@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lift szimuláció - Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+
+<body class="mainbody">
+    
+    <header class="navbar">
+        <a href="../../index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">PLC programozás</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>EasyVeep - Lift (felvonó) szimuláció</h2>
+        
+        <h3>Feladat leírása és egyszerűsítések:</h3>
+        <p>A rendszer egy 3 szintes (földszint, 1. emelet és 2. emelet) lift működését szimulálja. A fülkében nincs súlyérzékelő, sem Vészleállító (Stop) gomb. Minden hívógomb folyamatosan aktív, azonban a fülkében lévő hívógombok magasabb prioritással rendelkeznek a külső hívásokkal szemben.</p>
+        
+        <h4>A rendszer bemenetei (érzékelők és gombok):</h4>
+        <ul>
+            <li><strong>3 érzékelő/gomb</strong> a lift hívására az adott szintekről (földszint, 1. és 2. emelet)</li>
+            <li><strong>3 érzékelő/gomb</strong> a fülkében a célállomás kiválasztására</li>
+            <li><strong>3 érzékelő</strong> a lift aktuális pozíciójának (emeletének) azonosítására</li>
+            <li><strong>3 érzékelő</strong> annak visszajelzésére, hogy az adott szinteken az ajtók megfelelően be vannak-e zárva</li>
+        </ul>
+
+        <h4>A rendszer kimenetei (végrehajtók):</h4>
+        <ul>
+            <li><strong>1 végrehajtó</strong> a lift felfelé mozgatására</li>
+            <li><strong>1 végrehajtó</strong> a lift lefelé mozgatására</li>
+            <li><strong>3 végrehajtó</strong> az ajtók nyitására a megfelelő szinteken (földszint, 1. és 2. emelet)</li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Tag táblázat</h3>
+        <table>
+            <tr>
+                <th>Változó neve</th>
+                <th>Adattípus</th>
+                <th>PLC cím</th>
+            </tr>
+            <tr>
+                <td>Hivogomb foldszint</td>
+                <td>Bool</td>
+                <td>%I0.0</td>
+            </tr>
+            <tr>
+                <td>Hivogomb 1 emelet</td>
+                <td>Bool</td>
+                <td>%I0.1</td>
+            </tr>
+            <tr>
+                <td>Hivogomb 2 emelet</td>
+                <td>Bool</td>
+                <td>%I0.2</td>
+            </tr>
+            <tr>
+                <td>Foldszintre liftben</td>
+                <td>Bool</td>
+                <td>%I0.3</td>
+            </tr>
+            <tr>
+                <td>1 emeletre liftben</td>
+                <td>Bool</td>
+                <td>%I0.4</td>
+            </tr>
+            <tr>
+                <td>2 emeletre liftben</td>
+                <td>Bool</td>
+                <td>%I0.5</td>
+            </tr>
+            <tr>
+                <td>Lift a foldszinten</td>
+                <td>Bool</td>
+                <td>%I0.6</td>
+            </tr>
+            <tr>
+                <td>Lift az 1 emeleten</td>
+                <td>Bool</td>
+                <td>%I0.7</td>
+            </tr>
+            <tr>
+                <td>Lift a 2 emeleten</td>
+                <td>Bool</td>
+                <td>%I1.0</td>
+            </tr>
+            <tr>
+                <td>Ajto zarva a foldszinten</td>
+                <td>Bool</td>
+                <td>%I1.1</td>
+            </tr>
+            <tr>
+                <td>Ajto zarva az 1 emeleten</td>
+                <td>Bool</td>
+                <td>%I1.2</td>
+            </tr>
+            <tr>
+                <td>Ajto zarva a 2 emeleten</td>
+                <td>Bool</td>
+                <td>%I1.3</td>
+            </tr>
+            <tr>
+                <td>Liftmotor ind fel</td>
+                <td>Bool</td>
+                <td>%Q0.0</td>
+            </tr>
+            <tr>
+                <td>Liftmotor ind le</td>
+                <td>Bool</td>
+                <td>%Q0.1</td>
+            </tr>
+            <tr>
+                <td>Ajtonyitas foldszint</td>
+                <td>Bool</td>
+                <td>%Q0.2</td>
+            </tr>
+            <tr>
+                <td>Ajtonyitas 1 emelet</td>
+                <td>Bool</td>
+                <td>%Q0.3</td>
+            </tr>
+            <tr>
+                <td>Ajtonyitas 2 emelet</td>
+                <td>Bool</td>
+                <td>%Q0.4</td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>S7 - 1200 PLC-n LAD programozási nyelvben</p>
+        
+        <img src="../../images/lift1.png" alt="Létra diagram 1 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift2.png" alt="Létra diagram 2 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift3.png" alt="Létra diagram 3 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift4.png" alt="Létra diagram 4 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift5.png" alt="Létra diagram 5 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift6.png" alt="Létra diagram 6 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift7.png" alt="Létra diagram 7 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift8.png" alt="Létra diagram 8 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift9.png" alt="Létra diagram 9 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift10.png" alt="Létra diagram 10 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift11.png" alt="Létra diagram 11 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift12.png" alt="Létra diagram 12 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift13.png" alt="Létra diagram 13 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift14.png" alt="Létra diagram 14 - Lift vezérlés" class="kozep zoom">
+        <img src="../../images/lift15.png" alt="Létra diagram 15 - Lift vezérlés" class="kozep zoom">
+    </section>
+
+    <section class="mainsection">
+        <div class="felsorolas">
+            <h4>A vezérlés logikája és felépítése:</h4>
+            <p>A háromszintes lift vezérlése egy összetett, <strong>memóriatárolókra (Set/Reset) és reteszelésekre</strong> épülő logika alapján működik. A programnak nemcsak a mozgás irányát kell meghatároznia, hanem kezelnie kell a hívások prioritását és a biztonsági feltételeket is.</p>
+            
+            <ul>
+                <li><strong>Hívások tárolása és Prioritáskezelés:</strong> Mivel a gombnyomások csak pillanatnyi jelek, a rendszer SR (Set/Reset) tárolókkal jegyzi meg a hívásokat. A feladatkiírásnak megfelelően a fülkében leadott célállomás-igények (belső hívások) magasabb prioritást élveznek. Ezt a program szoftveres reteszeléssel (kizárással) oldja meg: ha van aktív belső hívás, a külső hívógombok jelei várakozó státuszba kerülnek, amíg a fülkeparancs ki nem fut.</li>
+                <li><strong>Mozgási irány meghatározása:</strong> A PLC folyamatosan összehasonlítja a tárolt célállomást a lift aktuális helyzetét jelző szenzorokkal (%I0.6, %I0.7, %I1.0). Ha a célállomás magasabban van, mint az aktuális pozíció, a "Liftmotor ind fel" (%Q0.0) aktiválódik. Ha alacsonyabban, akkor a "Liftmotor ind le" (%Q0.1) kimenet kapcsol be.</li>
+                <li><strong>Biztonsági reteszelés (Ajtók):</strong> A mozgás alapfeltétele a biztonság. A fel és le mozgás kimenetei elé sorosan be vannak kötve az ajtók zártságát figyelő szenzorok (%I1.1, %I1.2, %I1.3). A motor csak akkor kaphat áramot, ha az összes szinten zárt állapotot érzékel a rendszer (AND kapcsolat).</li>
+                <li><strong>Megállás és Ajtónyitás:</strong> Amikor a lift eléri a célállomást (az adott szint helyzetérzékelője aktívvá válik), a program törli (Reset) a mozgás parancsot és a tárolt hívást. A motor leállása után a vezérlés kiadja a parancsot a megfelelő szint ajtónyitó végrehajtójára (%Q0.2 - %Q0.4).</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="mainsection">
+    <h3>Videó a szimulációról</h3>
+    <video controls playsinline>
+      <source src="../../videos/lift.mp4" type="video/mp4">
+    </video>
+    </section>
+</body>
+</html>
