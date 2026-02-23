@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="style/style.css">
+    <script src="script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">PLC programozás</span>
+    </header>
+<section class="mainsection">
+        <h2>EasyVeep - Borpalackozó üzem szimuláció</h2>
+        <h3>Feladat leírása:</h3>
+        <p>A borpalackozó üzembe világos és sötét üvegek érkeznek. A palacktípus kiválasztása egy véletlenszám-generátor segítségével, vagy a felület alján található gombok egyikére történő kattintással történik. A világos üveget fehérborral kell megtölteni, majd a fehérbornak megfelelő dugóval és címkével kell ellátni. A sötét üveget értelemszerűen vörösborral kell megtölteni, és a hozzá tartozó dugóval, illetve címkével kell felszerelni. A gyártási folyamat végén vizuális minőségellenőrzés zajlik. A futószalag sebessége egérkattintással szabályozható.</p>
+        
+        <h4>A rendszer bemenetei (érzékelők):</h4>
+        <ul>
+            <li><strong>4 érzékelő</strong> a palack pozíciójának detektálására a 4 megmunkáló állomás valamelyikében</li>
+            <li><strong>2 érzékelő</strong> az üveg típusának (világos vagy sötét) felismerésére</li>
+            <li><strong>1 érzékelő</strong> annak visszajelzésére, hogy az aktuális állomás befejezte-e a műveletet</li>
+        </ul>
+
+        <h4>A rendszer kimenetei (végrehajtók):</h4>
+        <ul>
+            <li><strong>2 végrehajtó</strong> a töltéshez (1 a vörösbor, 1 a fehérbor palackozásához)</li>
+            <li><strong>2 végrehajtó</strong> a főcímkézéshez (1 a vörösboros, 1 a fehérboros üveghez)</li>
+            <li><strong>2 végrehajtó</strong> a nyakcímkézéshez (1 a vörösboros, 1 a fehérboros üveghez)</li>
+            <li><strong>1 végrehajtó</strong> a dugózás elvégzéséhez</li>
+            <li><strong>1 végrehajtó</strong> a futószalag motorjának működtetéséhez</li>
+        </ul>
+    </section>
+    <section class="mainsection">
+        <h3>Tag táblázat</h3>
+        <table>
+            <tr>
+                <th>Változó neve</th>
+                <th>Adattípus</th>
+                <th>PLC cím</th>
+            </tr>
+            <tr>
+                <td>Uveg bortolto all</td>
+                <td>Bool</td>
+                <td>%I0.0</td>
+            </tr>
+            <tr>
+                <td>Uveg dugozo all</td>
+                <td>Bool</td>
+                <td>%I0.1</td>
+            </tr>
+            <tr>
+                <td>Uveg gallerozo all</td>
+                <td>Bool</td>
+                <td>%I0.2</td>
+            </tr>
+            <tr>
+                <td>Uveg cimkezo all</td>
+                <td>Bool</td>
+                <td>%I0.3</td>
+            </tr>
+            <tr>
+                <td>Vorosboros uveg</td>
+                <td>Bool</td>
+                <td>%I0.4</td>
+            </tr>
+            <tr>
+                <td>Feherboros uveg</td>
+                <td>Bool</td>
+                <td>%I0.5</td>
+            </tr>
+            <tr>
+                <td>Akt all befejezte</td>
+                <td>Bool</td>
+                <td>%I0.6</td>
+            </tr>
+            <tr>
+                <td>Vorosbor toltese</td>
+                <td>Bool</td>
+                <td>%Q0.0</td>
+            </tr>
+            <tr>
+                <td>Feherbor toltese</td>
+                <td>Bool</td>
+                <td>%Q0.1</td>
+            </tr>
+            <tr>
+                <td>Uveg dugozasa</td>
+                <td>Bool</td>
+                <td>%Q0.2</td>
+            </tr>
+            <tr>
+                <td>Vbor galler</td>
+                <td>Bool</td>
+                <td>%Q0.3</td>
+            </tr>
+            <tr>
+                <td>Fbor galler</td>
+                <td>Bool</td>
+                <td>%Q0.4</td>
+            </tr>
+            <tr>
+                <td>Vbor cimkezese</td>
+                <td>Bool</td>
+                <td>%Q0.5</td>
+            </tr>
+            <tr>
+                <td>Fbor cimkezese</td>
+                <td>Bool</td>
+                <td>%Q0.6</td>
+            </tr>
+            <tr>
+                <td>Futoszalag motor</td>
+                <td>Bool</td>
+                <td>%Q0.7</td>
+            </tr>
+        </table>
+    </section>
+
+
+<section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>A projekt vezérlése egy S7-1200 PLC-n, TIA Portal környezetben, LAD programozási nyelven készült. A program szerkezete egy állapotgépre épül, ahol az aktuális fázist egy adatblokkban tárolt integer változó határozza meg.</p>
+        
+        <h4>A vezérlés logikája:</h4>
+        <ul>
+            <li><strong>1. állapot (Alaphelyzet & Figyelés):</strong> Ebben a fázisban az összes beavatkozó alaphelyzetbe áll (Reset), kivéve a futószalag motorját, amely elindul (Set). A rendszer TON (bekapcsolás-késleltető) időzítők segítségével, 2 másodperces szűréssel figyeli, hogy egy palack megérkezik-e valamelyik megmunkáló állomáshoz. Ha igen, a program a megfelelő állapotba ugrik (MOVE utasítással).</li>
+            <li><strong>2. állapot (Bor töltése):</strong> A futószalag leáll. A rendszer a szenzorok alapján eldönti, hogy vörös- vagy fehérboros üveg érkezett-e, majd bekapcsolja a megfelelő töltő aktuátort.</li>
+            <li><strong>3. állapot (Dugózás):</strong> A futószalag leáll, és a dugózó mechanizmus aktiválódik, függetlenül az üveg típusától.</li>
+            <li><strong>4. állapot (Nyakcímkézés / Gallérozás):</strong> A futószalag leáll. A szenzorjelek alapján a megfelelő (vörös vagy fehér) nyakcímkét felhelyező aktuátor lép működésbe.</li>
+            <li><strong>5. állapot (Főcímkézés):</strong> A futószalag leáll, és az üveg típusának megfelelő főcímke kerül a palackra.</li>
+        </ul>
+        
+        <p>A 2., 3., 4. és 5. állapotok mindegyikéből az <em>"Aktuális állomás befejezte"</em> (%I0.6) szenzor jelzése lépteti vissza a rendszert az 1. állapotba (MOVE 1), újraindítva a futószalagot a következő palackhoz.</p>
+
+        <h4>Létradiagramok (Networks):</h4>
+        <img src="images/palackozo.png" alt="1. állapot: Alaphelyzet és szenzorfigyelés időzítőkkel" class="kozep zoom">
+        <img src="images/palackozo2.png" alt="2. állapot: Bor töltése" class="kozep zoom">
+        <img src="images/palackozo3.png" alt="3. állapot: Üveg dugózása" class="kozep zoom">
+        <img src="images/palackozo4.png" alt="4. és 5. állapot: Nyak- és főcímkézés" class="kozep zoom">
+    </section>
+
+    <section class="mainsection">
+    <h3>Videó a szimulációról</h3>
+    <video controls playsinline>
+      <source src="videos/palackozo.mp4" type="video/mp4">
+    </video>
+</section>
+
+</body>
+
+
+</html>
+
