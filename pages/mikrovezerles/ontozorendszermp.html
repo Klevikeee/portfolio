@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="../../index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">Mikrovezérlés</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>Automata öntözőrendszer</h2>
+        <h3>Feladat leírása</h3>
+        <ul>
+            <li>Az öntöző rendszer célja, hogy egy nedvesség érzékelő segítségével
+automatikusan megöntözze az adott növényt.</li>
+        </ul>
+    </section>
+    <section>
+        <h3>
+            Alkatrészlista
+        </h3>
+    <ul class="alklista">
+    <li>ESP32</li>
+    <li>Relé modul</li>
+    <li>Nedvesség szenzor</li>
+    <li>Breadboard</li>
+    <li>Vezetékek</li>
+    <li>Mini víz pumpa és cső</li>
+    </ul>
+
+    </section>
+    <section class="mainsection">
+    <h3>Megvalósitás</h3>
+        <ul>
+            <li>A feladat megvalósítása egy ESP32 mikrokontrollerrel történt. Először egy alap programkóddal teszteltem a nedvességérzékelő szenzort, ezután mértem száraz/nedves földet, és ez alapján meghatároztam a "szaraz", "nedves" , "inditas" és "leallitas" változót
+                <pre><code>
+void setup() {
+pinMode(5, OUTPUT);
+Serial.begin(9600);
+}
+void loop() {
+int nedvesseg = analogRead(5);
+Serial.print("Nedvesseg: ");
+
+Serial.println(nedvesseg);
+}
+}
+                </code></pre>
+                Ezután elkészült a kapcsolási rajz, utána pedig teszteltem a programot.
+            </li>
+
+    
+        </ul>
+    </section>
+
+    <section>
+        <h3>Kapcsolási rajz</h3>
+        <img class="kozep zoom" src="../../images/kapcsolasirajz.png">
+    </section>
+
+    <section>
+        <h3>Program kód</h3>
+        <pre>
+            <code>
+<p class="comment">// szenzor es rele pin megadasa   </p>
+const int rele = 4;
+const int szenzor = 34;
+<p class="comment">// ertekek amiket soros monitoron kiolvasas utan hataroztam meg tesztelve szaraz es nedves foldben is  </p>
+const int szaraz = 4000; 
+const int nedves = 1400;
+const int inditas = 3800;
+const int leallitas = 2500;
+
+boolean relebekapcs = false;
+boolean manualis = false;
+
+void setup() {
+  Serial.begin(115200);
+  pinMode(rele, OUTPUT);
+  pinMode(LED,OUTPUT);
+  digitalWrite(rele, HIGH);
+  relebekapcs = false;
+
+void loop() {
+  int ertek = analogRead(szenzor); <p class="comment">
+// a szenzor ertekenek beolvasasa  </p> 
+  float nedvesseg = ((float)(szaraz - ertek) * 100.0) / (float)(szaraz - nedves);<p class="comment">// analog ertek atalakitasa szazalekos ertekke</p>
+  nedvesseg = constrain(nedvesseg, 0, 100);<p class="comment">//csak 0 es 100 kozott lehessen, ne menjen at minuszba</p>
+    if (!relebekapcs && ertek > inditas) {<p class="comment">//ha nem ontoz, es a mert ertek nagyobb (mert forditva mukodik, nagyobb ertek = szarazabb)  xmint az inditasi ertek akkor rele bekapcs(ontozzon)</p>
+      digitalWrite(rele, LOW);
+      relebekapcs = true;
+    } else if (relebekapcs && ertek < leallitas) {<p class="comment">//ha ontoz es az ertek kisebb(magyarul elegge nedves) mint a leallitasi ertek(ami egy nedvesen mert ertek) akkor rele kikapcs (nem ontoz)</p>
+      digitalWrite(rele, HIGH);
+      relebekapcs = false;
+    }
+  }
+            </code>
+        </pre>
+    </section>
+    <section>
+        <h3>Kép projektről</h3>
+<div class="video-container">
+<video controls playsinline>
+  <source src="https://objectstorage.eu-frankfurt-1.oraclecloud.com/n/frqlqknvysok/b/portfolio-videok/o/frekivalto.MOV" type="video/mp4">
+</video>
+</div>
+    </section>
+</body>
+<footer>
+    <p>Készítette: Kovács Levente Lajos 13/C</p>
+</footer>
+
+</html>
+
+
+
+
+
+
+
+
+
+
