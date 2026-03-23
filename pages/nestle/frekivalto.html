@@ -21,7 +21,7 @@
         
         <h3>Feladat leírása:</h3>
         <p>
-            A projekt célja egy ipari aszinkron motor vezérlése frekvenciaváltón keresztül. A vezérlés egy Allen Bradley (Studio 5000) környezetben programozott állapotgépen alapul. A rendszer nemcsak a motor indítását és leállítását végzi, hanem egy analóg bemenetről érkező nyers adatot (például hőmérsékletet) skáláz át a frekvenciaváltó számára megfelelő frekvencia-alapjellé. A biztonságról egy többszintű vészleállító kör és egy hibajelző visszacsatolás gondoskodik.
+            A projekt célja egy ipari aszinkron motor vezérlése frekvenciaváltón keresztül. A vezérlés egy Allen Bradley (Studio 5000) környezetben programozott PLC állapotgépen alapul. A rendszer nemcsak a motor indítását és leállítását végzi, hanem egy analóg bemenetről érkező nyers adatot (például hőmérsékletet) skáláz át a frekvenciaváltó számára megfelelő frekvencia-alapjellé. A biztonságról egy többszintű vészleállító kör és egy hibajelző visszacsatolás gondoskodik.
         </p>
     </section>
 
@@ -65,7 +65,7 @@
         <h3>Logikai megvalósítás (Létradiagram)</h3>
         
         <h4>1. Állapot (Step 0): Inicializálás és Skálázás</h4>
-        <p>A rendszer alaphelyzetben a Start gomb megnyomására vár. Ezzel párhuzamosan folyamatosan zajlik az analóg érték feldolgozása. A <code>CPT</code> (Compute) blokk az alábbi képlet alapján számolja ki a frekvenciát:</p>
+        <p>A rendszer alaphelyzetben a Start gomb megnyomására vár. Ezzel párhuzamosan folyamatosan zajlik az analóg érték feldolgozása. A CPT (Compute) blokk az alábbi képlet alapján számolja ki a frekvenciát:</p>
         <p>$$MangoMFreki = (HomersekletNyersAdat / 655.34) + 10$$</p>
         <p>Ez biztosítja, hogy a motor egy biztonságos minimum (10 Hz) és maximum tartomány között mozogjon.</p>
         <img src="../../images/Képernyőkép 2025-08-05 140700.png" alt="Állapot 0 és skálázás" class="kozep zoom">
@@ -75,17 +75,17 @@
         <img src="../../images/Képernyőkép 2025-08-05 140708.png" alt="Állapot 2: Run fázis" class="kozep zoom">
 
         <h4>3. Állapot (Step 5): Vészleállás és Hibajelzés</h4>
-        <p>Hiba esetén a motor leáll. A kezelő figyelmeztetése érdekében a <code>NyugtaGombLED</code> kimenet villogni kezd. A villogást két darab 500ms-os <code>TON</code> időzítő (nyug4 és nyug5) által generált impulzus sorozat hozza létre.</p>
+        <p>Hiba esetén a motor leáll. A kezelő figyelmeztetése érdekében a NyugtaGombLED kimenet villogni kezd. A villogást két darab 500ms-os TON időzítő (nyug4 és nyug5) által generált impulzus sorozat hozza létre.</p>
         <img src="../../images/Képernyőkép 2025-08-05 140716.png" alt="Állapot 5: Villogó hibaüzenet" class="kozep zoom">
 
         <h4>4. Állapot (Step 6): Rendszer nyugtázása és Reset</h4>
-        <p>A hiba elhárítása után a rendszer nem indul újra azonnal. Egy biztonsági időzítő (nyug6) lefutása után a <code>MOV</code> utasítás visszateszi az állapotgépet 0-ás pozícióba, így a gép újra indíthatóvá válik.</p>
+        <p>A hiba elhárítása után a rendszer nem indul újra azonnal. Egy biztonsági időzítő (nyug6) lefutása után a MOV utasítás visszateszi az állapotgépet 0-ás pozícióba, így a gép újra indíthatóvá válik.</p>
         <img src="../../images/Képernyőkép 2025-08-05 140723.png" alt="Állapot 6: Időzített visszaállás" class="kozep zoom">
     </section>
 
     <section class="mainsection">
         <h3>Működés közben</h3>
-        <p>Az alábbi videón megfigyelhető a frekvenciaváltó felpörgése és a PLC állapotváltásai vészleállítás során.</p>
+        <p>Az alábbi videón megfigyelhető a frekvenciaváltó felpörgése és a frekvenciajel változása a hőmérséklettől függően</p>
         <div class="video-container">
             <video controls playsinline>
                 <source src="../../videos/projekt_video.mp4" type="video/mp4">

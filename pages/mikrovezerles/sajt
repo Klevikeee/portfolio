@@ -1,0 +1,84 @@
+int allapot = 0;  // BAL (kifelé) forgalom állapota
+int allapot2 = 0; // JOBB (befelé) forgalom állapota
+
+void setup() {
+  // Kimenetek beállítása
+  pinMode(13, OUTPUT); // Jobb sorompó motor
+  pinMode(A0, OUTPUT); // Bal sorompó motor
+  pinMode(A1, OUTPUT); // Lámpa befelé (piros)
+  pinMode(A2, OUTPUT); // Lámpa befelé (zöld)
+  pinMode(A3, OUTPUT); // Lámpa kifelé (piros)
+  pinMode(A4, OUTPUT); // Lámpa kifelé (zöld)
+  pinMode(A5, OUTPUT); // (Jelenleg nincs használva)
+  pinMode(10, OUTPUT); // (Jelenleg nincs használva)
+
+  // Kimenetek alaphelyzetbe állítása (Minden kikapcsolva)
+  digitalWrite(13, LOW);
+  digitalWrite(A0, LOW);
+  digitalWrite(A1, LOW);
+  digitalWrite(A2, LOW);
+  digitalWrite(A3, LOW);
+  digitalWrite(A4, LOW);
+  digitalWrite(A5, LOW);
+  digitalWrite(10, LOW);
+
+  // Bemenetek beállítása (Szenzorok: 2-től 9-ig)
+  for (int pin = 2; pin <= 9; pin++) {
+      pinMode(pin, INPUT); 
+  }
+}
+
+void loop() {
+  // 1. Állapotok beállítása a bemenetek alapján
+  // Ha autó van jobb oldalon (6-os pin LOW) ÉS a jobb sorompó lent van (2-es pin LOW)
+  if (digitalRead(6) == LOW && digitalRead(2) == LOW) { 
+    allapot2 = 1;
+  }
+  
+  // Ha autó van bal oldalon (7-es pin LOW) ÉS a bal sorompó lent van (4-es pin LOW - az 5-ös helyett javítva!)
+  if (digitalRead(7) == LOW && digitalRead(4) == LOW) { 
+    allapot = 2;
+  }
+
+  // 2. Alapállapot (Nincs autó, minden sorompó lent)
+  if (allapot == 0 && allapot2 == 0) {
+      digitalWrite(13, LOW);  // Jobb sorompó motor ki
+      digitalWrite(A0, LOW);  // Bal sorompó motor ki
+      digitalWrite(A3, HIGH); // Lámpa kifelé piros
+      digitalWrite(A1, HIGH); // Lámpa befelé piros
+  }
+
+  // 3. Jobb oldali forgalom lekezelése
+  if (allapot2 == 1) {
+    digitalWrite(A1, LOW);  // Piros lámpa kikapcsol
+    digitalWrite(A2, HIGH); // Zöld lámpa bekapcsol
+    
+    // Amíg az autó a szenzoron van (LOW jel)
+    while (digitalRead(6) == LOW) { 
+      digitalWrite(13, HIGH); // Jobb sorompó motor be (emeli)
+    }
+    
+    // Amikor az autó elhajtott:
+    digitalWrite(13, LOW);  // Jobb motor ki (sorompó ereszkedik)
+    digitalWrite(A2, LOW);  // Zöld lámpa ki
+    digitalWrite(A1, HIGH); // Piros lámpa be
+    allapot2 = 0;           // Vissza alapállapotba
+  }
+
+  // 4. Bal oldali forgalom lekezelése
+  if (allapot == 2) {
+    digitalWrite(A3, LOW);  // Piros lámpa kikapcsol
+    digitalWrite(A4, HIGH); // Zöld lámpa bekapcsol
+    
+    // Amíg az autó a szenzoron van (LOW jel)
+    while (digitalRead(7) == LOW) { 
+      digitalWrite(A0, HIGH); // Bal sorompó motor be (emeli)
+    }
+    
+    // Amikor az autó elhajtott:
+    digitalWrite(A0, LOW);  // Bal motor ki (sorompó ereszkedik)
+    digitalWrite(A4, LOW);  // Zöld lámpa ki
+    digitalWrite(A3, HIGH); // Piros lámpa be
+    allapot = 0;            // Vissza alapállapotba
+  }
+}
