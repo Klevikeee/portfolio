@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió - Kereszteződés vezérlés</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+        <a href="../../index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">PLC programozás</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>Útkereszteződés Forgalomirányító Rendszer</h2>
+        <h3>Feladat leírása:</h3>
+        <p>A feladat egy négyirányú útkereszteződés közlekedési lámpáinak vezérlése. A programnak biztosítania kell a biztonságos áthaladást (megfelelő zöld, sárga, és piros fázisokkal, valamint biztonsági középállásokkal). A normál üzemen kívül a rendszer rendelkezik egy dedikált indítási (teszt/ürítő) fázissal és egy leállítási (sárga villogó) funkcióval is.</p>
+        
+        <h4>A rendszer bemenetei (kezelőszervek):</h4>
+        <ul>
+            <li><strong>1 nyomógomb (StartGomb):</strong> A forgalomirányító ciklus elindítására.</li>
+            <li><strong>1 nyomógomb (StopGomb):</strong> A rendszer leállítására és sárga villogó üzemmódba kapcsolására.</li>
+        </ul>
+
+        <h4>A rendszer kimenetei (végrehajtók/visszajelzők):</h4>
+        <ul>
+            <li><strong>12 kimenet (Lámpák):</strong> 4 darab közlekedési lámpa (irányonként), mindegyiknél külön Piros, Sárga és Zöld jelzés.</li>
+            <li><strong>2 visszajelző LED:</strong> A kezelőpulton a Start (MangoStartLed) és Stop (MangoStopLed) állapotok jelzésére.</li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Tag táblázat (Főbb változók)</h3>
+        <table>
+            <tr>
+                <th>Változó neve</th>
+                <th>Adattípus</th>
+                <th>Funkció / Leírás</th>
+            </tr>
+            <tr>
+                <td>MangoLepes</td>
+                <td>DINT</td>
+                <td>A szekvenciális állapotgép aktuális lépésszáma (0-103)</td>
+            </tr>
+            <tr>
+                <td>StartGomb</td>
+                <td>Bool</td>
+                <td>Rendszer indítása (Fizikai bemenet)</td>
+            </tr>
+            <tr>
+                <td>StopGomb</td>
+                <td>Bool</td>
+                <td>Rendszer leállítása (Fizikai bemenet)</td>
+            </tr>
+            <tr>
+                <td>MangoLampa[1-4][Szín]</td>
+                <td>Bool</td>
+                <td>Lámpák kimenetei (pl. MangoLampa1Zold, MangoLampa2Piros)</td>
+            </tr>
+            <tr>
+                <td>mangotimer[X]</td>
+                <td>TIMER (TON)</td>
+                <td>Az egyes fázisok és lépések időzítői</td>
+            </tr>
+            <tr>
+                <td>MangoStartLed</td>
+                <td>Bool</td>
+                <td>Üzemkész/Futó állapot visszajelzése</td>
+            </tr>
+            <tr>
+                <td>MangoStopLed</td>
+                <td>Bool</td>
+                <td>Leállított állapot visszajelzése</td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>Studio 5000 / Logix Designer környezetben, LAD programozási nyelvben.</p>
+        <img src="../../images/keresztezodes1.png" class="kozep zoom">
+        <img src="../../images/keresztezodes2.png" class="kozep zoom">
+        <img src="../../images/keresztezodes3.png" class="kozep zoom">
+        <img src="../../images/keresztezodes4.png" class="kozep zoom">
+        <img src="../../images/keresztezodes5.png" class="kozep zoom">
+        <img src="../../images/keresztezodes6.png" class="kozep zoom">
+    </section>
+
+    <section class="mainsection">
+        <div class="felsorolas">
+            <h4>A vezérlés logikája és felépítése:</h4>
+            <p>A feladat megoldása során egy <strong>szekvenciális állapotgépet (State Machine)</strong> valósítottam meg, amely a `MangoLepes` változó értékére támaszkodik:</p>
+            <ul>
+                <li><strong>Lépéses szekvencia:</strong> A program lépésről lépésre (10, 20, 30 stb.) halad. Minden fázishoz egy dedikált bekapcsolás-késleltető időzítő (TON) és Latch/Unlatch utasításpár tartozik, amely biztosítja az adott lámpakombináció fenntartását.</li>
+                <li><strong>Indítási (Start) ciklus:</strong> A gomb megnyomásakor a rendszer nem enged rá azonnal zöld jelzést a forgalomra. Először egy ürítő fázis fut le, ahol minden irány pirosat kap, megelőzve a baleseteket.</li>
+                <li><strong>Leállítási (Stop) ciklus:</strong> Leállításkor a program azonnal megszakítja a normál üzemet, és egy sárga villogó fázisba (`MangoLepes = 100`) áll át, figyelmeztetve a közlekedőket a megváltozott forgalmi rendre.</li>
+                <li><strong>Biztonsági középállások:</strong> A zöldről zöldre váltás (különböző irányok között) sosem közvetlen. Minden irányváltás között egy "mindenki piros" biztonsági idősáv található.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="mainsection">
+        <h3>Videó a szimulációról</h3>
+        <video controls playsinline>
+            <source src="../../videos/KeresztezodesSzimulacio.mp4" type="video/mp4">
+        </video>
+    </section>
+
+</body>
+</html>
