@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió - Logikai áramkör</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+        <a href="../../index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">Számítógépes szimuláció</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>Logikai áramkör</h2>
+        
+        <h3>Feladat leírása:</h3>
+        <p>Az áramkör a következő műveletet valósítja meg:<br>
+        <img src="../../images/muvelet.png" alt="muvelet">
+
+        
+        <h4>A rendszer bemenetei és vezérlése:</h4>
+        <ul>
+            <li><strong>Bemenetek:</strong> A, B, C, D (adat), Enable (vezérlés).</li>
+            <li><strong>Engedélyezési feltétel:</strong> Enable = Low.</li>
+            <li><strong>Működés:</strong> Az áramkör kimenete csak alacsony szintű vezérlőjel mellett aktív.</li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás (Kapcsolási rajz):</h3>
+        <p>Az áramkör logikai kapuk (AND, OR, NOT, NOR) felhasználásával készült.</p>
+        <img src="../../images/logikai_aramkor.png" alt="Logikai áramkör kapcsolási rajza" class="kozep zoom">
+    </section>
+
+    <section class="mainsection">
+        <h3>Igazság tábla</h3>
+        <p><strong>Megjegyzés:</strong> Az Enable láb ha 1, akkor sose lesz 1 a Q kimenet. Az alábbi táblázat az aktív (alacsony) Enable szint melletti állapotokat mutatja be.</p>
+        
+        <table>
+            <tr>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+                <th>EN</th>
+                <th>Q</th>
+            </tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+            <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+            <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+        </table>
+    </section>
+
+</body>
+</html>
