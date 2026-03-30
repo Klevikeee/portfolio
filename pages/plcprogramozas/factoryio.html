@@ -37,13 +37,13 @@
     <section class="mainsection">
         <h3>Főbb funkciók és megoldások:</h3>
         <ul>
-            <li><strong>Időalapú (Time-based) Vak-válogatás:</strong> Mivel a válogató kapuknál nincsenek fizikai szenzorok, a dobozok kilökése <code>TON</code> időzítők milliszekundum pontosságú kalibrálásával, előre kiszámított időablakok alapján történik a szalag sebességéhez igazítva.</li>
+            <li><strong>Időalapú (Time-based) Vak-válogatás:</strong> Mivel a válogató kapuknál nincsenek fizikai szenzorok, a dobozok kilökése TON időzítők milliszekundum pontosságú kalibrálásával, előre kiszámított időablakok alapján történik a szalag sebességéhez igazítva.</li>
             <li><strong>Folyamat-reteszelés és Állapotgép:</strong> Anyagáramlási torlódások (Traffic Jam) megakadályozása az ütközőpenge (Stop Blade) szoftveres vezérlésével. A rendszer lefoglalja magát a feldolgozás alatt, meggátolva a szenzoradatok felülírását.</li>
             <li><strong>Kétirányú HMI Kommunikáció (PN/IE):</strong> 
                 <br>- <em>Vezérlés:</em> A gép teljes körű indítása, leállítása és a számlálók nullázása a fizikai érintőképernyőről (SetBit/ResetBit logikával, párhuzamosítva a lokális gombokkal).
-                <br>- <em>Monitorozás:</em> A feldolgozott termékek darabszámának valós idejű követése (<code>CTU</code> blokk), valamint a nyers kamerás szenzoradatok dinamikus, szöveges dekódolása (pl. "KÉK DOBOZ") a kezelő számára <code>Text List</code> funkciók segítségével.
+                <br>- <em>Monitorozás:</em> A feldolgozott termékek darabszámának valós idejű követése CTU blokk, valamint a nyers kamerás szenzoradatok dinamikus, szöveges dekódolása (pl. "KÉK DOBOZ") a kezelő számára Text List funkciók segítségével.
             </li>
-            <li><strong>Strukturált Programozás:</strong> Újrafelhasználható Funkcióblokkok (<code>FB</code>) és saját memóriapéldányok (<code>Instance DB</code>) alkalmazása az átlátható és stabil kódstruktúra érdekében a globális memóriák túlzsúfolása helyett.</li>
+            <li><strong>Strukturált Programozás:</strong> Újrafelhasználható Funkcióblokkok (FB) és saját memóriapéldányok (Instance DB) alkalmazása az átlátható és stabil kódstruktúra érdekében a globális memóriák túlzsúfolása helyett.</li>
         </ul>
     </section>
 
@@ -137,13 +137,11 @@
     </section>
 
         <section class="mainsection">
-    <h3>Videó a szimulációról</h3>
-    <div class="video-container">
-                    <iframe src="https://drive.google.com/file/d/1yvDLpXQw2NoJDQNkZc6FnmafE4VEYcdh/view" style="width: 100%; height: 480px; border: none; border-radius: 8px;" allow="autoplay"></iframe>
-                    <div class="video-info">
-                    </div>
-                </div
-    </section>
+        <h3>Videó a szimulációról</h3>
+        <video controls playsinline>
+        <source src="../../videos/factoryio.mp4" type="video/mp4">
+        </video>
+       </section>
 
     </body>
 </html>
