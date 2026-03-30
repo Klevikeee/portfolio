@@ -73,13 +73,13 @@ h2{
 
 .kozep{
     display: block;
-    margin: 20px auto;
-    width: 55%;
+    margin: 30px auto;
+    width: 85%;
     transition: width 0.3s ease;
     cursor:pointer;
 }
 .zoom.nagy{
-    width: 90%;
+    width: 100%;
 }
 
 .comment{

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+
+<body class="mainbody">
+
+    <header class="navbar">
+        <a href="../../index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">Hálózatkezelés</span>
+    </header>
+    <section class="mainsection">
+        <h2>Airport hálózati projekt</h2>
+        <h3>Feladat leírása:</h3>
+        <ul>
+            <li>
+                A Párizs-Charles de Gaulle repülőtér informatikai infrastruktúrájának korszerűsítése a cél.
+            </li>
+            <li>
+                A reptér rendelkezik egy központi épülettel (TERMINAL NET), ahol az utasok várakoznak az indulásra. Itt kapott helyet a hálózat adminisztrátora és a szerverek.
+            </li>
+            <li>
+                A gépek fel- és leszállásának irányítását az irányítótoronyból (TOWER_NET) végzik.
+            </li>
+            <li>
+                A közeli Párizsban jegyirodák (OFFICE_NET) találhatók, melyekből a repülőtér szervereit el kell tudni érni.
+            </li>
+        </ul>
+    </section>
+    
+    <section class="mainsection">
+        <h3>Hálózati topológia:</h3>
+        <img class="kozep zoom"  src="../../images/airport.png" alt="Airport hálózati topológia" title="Airport hálózati topológia">
+    </section>
+
+    <section class="mainsection">
+        <h3>Hálózati címzés</h3>
+        <table>
+            <tr>
+                <td><strong>Eszköz neve</strong></td>
+                <td><strong>IP-cím</strong></td>
+                <td><strong>Alhálózati maszk</strong></td>
+                <td><strong>Alapértelmezett átjáró</strong></td>
+            </tr>
+            <tr>
+                <td>TERMINAL</td>
+                <td>172.30.255.254<br>10.11.12.1<br>10.10.10.1</td>
+                <td>255.255.0.0<br>255.255.255.128<br>255.255.255.252</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>SZERVER</td>
+                <td>172.30.255.1</td>
+                <td>255.255.0.0</td>
+                <td>172.30.255.254</td>
+            </tr>
+            <tr>
+                <td>TERMINAL PC</td>
+                <td>172.30.0.1</td>
+                <td>255.255.0.0</td>
+                <td>172.30.255.254</td>
+            </tr>
+            <tr>
+                <td>TERMINAL SW</td>
+                <td>172.30.255.253</td>
+                <td>255.255.0.0</td>
+                <td>172.30.255.254</td>
+            </tr>
+            <tr>
+                <td>PASSANGERS WIFI</td>
+                <td>172.30.255.252<br>192.168.100.1</td>
+                <td>255.255.0.0<br>255.255.255.0</td>
+                <td>172.30.255.254</td>
+            </tr>
+            <tr>
+                <td>MOBIL</td>
+                <td>DHCP kliens</td>
+                <td>DHCP kliens</td>
+                <td>192.168.100.254</td>
+            </tr>
+            <tr>
+                <td>TOWER</td>
+                <td>10.10.10.2<br>192.168.30.254</td>
+                <td>255.255.255.252<br>255.255.255.0</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>TOWER PC</td>
+                <td>192.168.30.1</td>
+                <td>255.255.255.0</td>
+                <td>192.168.30.254</td>
+            </tr>
+            <tr>
+                <td>OFFICE</td>
+                <td>10.11.12.2<br>20.255.255.254</td>
+                <td>255.255.255.128<br>255.0.0.0</td>
+                <td>-</td>
+            </tr>
+            <tr>
+                <td>OFFICE PC</td>
+                <td>DHCP kliens</td>
+                <td>DHCP kliens</td>
+                <td>20.255.255.254</td>
+            </tr>
+        </table>
+    </section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás leírása</h3>
+        
+        <h4>1. A hálózat prototípusának felépítése és eszközök összekapcsolása</h4>
+        <ul>
+            <li>A forgalomirányítók legalább két 100 Mbit/s sebességű, és ahol szükséges, soros interfésszel rendelkeznek.</li>
+            <li>A kapcsolók legalább nyolcportosak.</li>
+            <li>A vezeték nélküli hálózathoz SOHO forgalomirányító került felhasználásra.</li>
+            <li>A PASSANGERS WIFI eszköz internet portja a TERMINAL SW kapcsolóhoz csatlakozik.</li>
+        </ul>
+
+        <h4>2. Alapbeállítások és IP-paraméterek kiosztása</h4>
+        <ul>
+            <li>Az eszközök megkapták a táblázat szerinti IP-címeket és neveket (TERMINAL, TOWER, OFFICE, TERMINAL SW, OFFICE SW).</li>
+            <li>A DNS szerver (11.11.11.11) beállításra került a TOWER_PC kliensen és a PASSANGERS_WIFI eszközön is.</li>
+        </ul>
+        
+        <h4>3. Biztonság és távoli elérés</h4>
+        <ul>
+            <li>Az OFFICE SW kapcsolón a konzol port jelszava "office123" lett, és a jelszavak titkosítva lettek a futó konfigurációban.</li>
+            <li>A TERMINAL forgalomirányítón "admin" felhasználó jött létre "admin123" jelszóval, telnet eléréssel minden virtuális terminálon.</li>
+        </ul>
+
+        <h4>4. IP Irányítás (RIPv2 és statikus útvonal)</h4>
+        <ul>
+            <li>RIPv2 irányító protokoll fut a TERMINAL és TOWER forgalomirányítókon a megfelelő hálózatok hirdetésével.</li>
+            <li>Az irányítási információk csak a forgalomirányítók között cserélődnek (passzív interfészek használata).</li>
+            <li>A TERMINAL forgalomirányítón alapértelmezett útvonal mutat az OFFICE router irányába.</li>
+        </ul>
+
+        <h4>5. DHCP szolgáltatások beállítása</h4>
+        <ul>
+            <li>Az OFFICE router dinamikusan osztja a címeket az OFFICE_NET hálózatba, ahol az első és utolsó 5 cím kizárásra került.</li>
+            <li>Az alapértelmezett átjáró és a 11.11.11.11 DNS cím beállítása megtörtént a DHCP medencében.</li>
+        </ul>
+
+        <h4>6. Vezeték nélküli hálózat (WIFI)</h4>
+        <ul>
+            <li>A PASSANGERS WIFI eszköz a 192.168.100.0/24 belső hálózatot használja.</li>
+            <li>DHCP szolgáltatás indult a belső hálózaton a 2. címtől, maximum 200 kliens számára.</li>
+            <li>A hálózat SSID-ja "PASSANGERS", WPA2 védelemmel és "airport123" jelszóval.</li>
+        </ul>
+
+        <h4>7. Hálózati címfordítás (NAT)</h4>
+        <ul>
+            <li>Statikus NAT beállítása a TERMINAL forgalomirányítón: a SZERVER (172.30.255.1) összerendelése a 10.11.12.3 külső címmel.</li>
+            <li>A külső és belső interfészek megfelelően lettek konfigurálva.</li>
+        </ul>
+        
+        <h4>8. Konfiguráció mentése</h4>
+        <ul>
+            <li>A TERMINAL forgalomirányítón és a TERMINAL SW kapcsolón a futó konfiguráció mentésre került.</li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Tesztelés és ellenőrzés</h3>
+        <ul>
+            <li>A vezeték nélküli kliensről (MOBIL) sikeres ping a SZERVER felé.</li>
+            <li>A TOWER_PC-ről sikeres ping a TERMINAL PC irányába.</li>
+            <li>A TERMINAL_PC telneten és pinggel is eléri a TERMINAL forgalomirányítót.</li>
+            <li>Az OFFICE PC böngészőből sikeresen megnyitja a SZERVER-t a 10.11.12.3 IP-címen.</li>
+        </ul>
+        <video controls playsinline>
+            <source src="../../videos/airporttest.mp4" type="video/mp4">
+        </video>
+    </section>
+</body>
+</html>
