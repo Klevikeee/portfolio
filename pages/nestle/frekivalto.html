@@ -65,9 +65,19 @@
         <h3>Logikai megvalósítás (Létradiagram)</h3>
         
         <h4>1. Állapot (Step 0): Inicializálás és Skálázás</h4>
-        <p>A rendszer alaphelyzetben a Start gomb megnyomására vár. Ezzel párhuzamosan folyamatosan zajlik az analóg érték feldolgozása. A CPT (Compute) blokk az alábbi képlet alapján számolja ki a frekvenciát:</p>
-        <p>$$MangoMFreki = (HomersekletNyersAdat / 655.34) + 10$$</p>
-        <p>Ez biztosítja, hogy a motor egy biztonságos minimum (10 Hz) és maximum tartomány között mozogjon.</p>
+        <p>A rendszer alaphelyzetben a Start gomb megnyomására vár. Ebben az állapotban a vezérlés folyamatosan feldolgozza az analóg bemeneti jelet, és azt egy használható fizikai értékké alakítja.</p>
+
+        <p>A CPT (Compute) blokk az alábbi képlet alapján végzi a skálázást:</p>
+
+        <p>MangoMFrek2 = ((HomersekletNyersAdat - 3277.0) / 29490.0) * 40.0 + 10.0</p>
+
+        <p>Ez a művelet eltávolítja a bemeneti jel offsetjét, majd átskálázza azt a kívánt tartományra, végül hozzáad egy minimum értéket. Az így kapott eredmény egy 10 és 50 közötti frekvenciaérték.</p>
+
+        <p>Egy további CPT blokk az értéket felszorozza:</p>
+
+        <p>MangoMFrek2 = MangoMFrek2 * 100</p>
+
+        <p>Ez a lépés a frekvencia további skálázását végzi (például vezérlőjelhez vagy százalékos értékhez igazítva). A "mangoReal" változó ugyanezt az értéket tartalmazza valós formátumban további feldolgozáshoz.</p>
         <img src="../../images/Képernyőkép 2025-08-05 140700.png" alt="Állapot 0 és skálázás" class="kozep zoom">
 
         <h4>2. Állapot (Step 2): Üzemi vezérlés</h4>
