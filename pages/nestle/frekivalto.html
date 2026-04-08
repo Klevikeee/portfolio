@@ -25,41 +25,91 @@
         </p>
     </section>
 
-    <section class="mainsection">
-        <h3>I/O és Tag táblázat</h3>
-        <table>
-            <tr>
-                <th>Változó neve</th>
-                <th>Típus</th>
-                <th>Leírás</th>
-            </tr>
-            <tr>
-                <td><strong>mmlepes</strong></td>
-                <td>DINT</td>
-                <td>A fő állapotgép aktuális lépése (0-6).</td>
-            </tr>
-            <tr>
-                <td><strong>HomersekletNyersAdat</strong></td>
-                <td>INT</td>
-                <td>Analóg bemenetről érkező 0-32767 közötti érték.</td>
-            </tr>
-            <tr>
-                <td><strong>MangoMFreki</strong></td>
-                <td>REAL</td>
-                <td>A frekvenciaváltónak kiküldött számított alapjel (Hz).</td>
-            </tr>
-            <tr>
-                <td><strong>Local:1:I.Pt14.Data</strong></td>
-                <td>BOOL</td>
-                <td>Vészstop (E-Stop) bemenet.</td>
-            </tr>
-            <tr>
-                <td><strong>NyugtaGombLED</strong></td>
-                <td>BOOL</td>
-                <td>Hiba esetén villogó visszajelző fény.</td>
-            </tr>
-        </table>
-    </section>
+<section class="mainsection">
+    <h3>I/O és Tag táblázat</h3>
+    <table>
+        <tr>
+            <th>Változó neve</th>
+            <th>Típus</th>
+            <th>Leírás</th>
+        </tr>
+        <tr>
+            <td><strong>mmlepes</strong></td>
+            <td>DINT</td>
+            <td>A fő állapotgép aktuális lépése (0-6).</td>
+        </tr>
+        <tr>
+            <td><strong>HomersekletNyersAdat</strong></td>
+            <td>INT</td>
+            <td>Analóg bemenetről érkező 0-32767 közötti érték.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoMFrekI2</strong></td>
+            <td>REAL</td>
+            <td>Számított frekvencia alapjel (skálázott érték).</td>
+        </tr>
+        <tr>
+            <td><strong>mangoReal</strong></td>
+            <td>REAL</td>
+            <td>Hőmérsékletből számolt valós (°C) érték.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoMFreki</strong></td>
+            <td>REAL</td>
+            <td>A frekvenciaváltónak kiküldött végleges alapjel (Hz).</td>
+        </tr>
+        <tr>
+            <td><strong>StartGomb</strong></td>
+            <td>BOOL</td>
+            <td>Indító nyomógomb bemenet.</td>
+        </tr>
+        <tr>
+            <td><strong>StopGomb</strong></td>
+            <td>BOOL</td>
+            <td>Leállító nyomógomb bemenet.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoMStart</strong></td>
+            <td>BOOL</td>
+            <td>Motor indítási parancs.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoMStop</strong></td>
+            <td>BOOL</td>
+            <td>Motor leállítási parancs.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoStartLed</strong></td>
+            <td>BOOL</td>
+            <td>Indítás állapotát jelző LED.</td>
+        </tr>
+        <tr>
+            <td><strong>MangoStopLed</strong></td>
+            <td>BOOL</td>
+            <td>Leállítás állapotát jelző LED.</td>
+        </tr>
+        <tr>
+            <td><strong>NyugtaGombLED</strong></td>
+            <td>BOOL</td>
+            <td>Hiba esetén villogó visszajelző fény.</td>
+        </tr>
+        <tr>
+            <td><strong>Local:1:I.Pt11.Data</strong></td>
+            <td>BOOL</td>
+            <td>Start gomb fizikai bemenet.</td>
+        </tr>
+        <tr>
+            <td><strong>Local:1:I.Pt12.Data</strong></td>
+            <td>BOOL</td>
+            <td>Stop gomb fizikai bemenet.</td>
+        </tr>
+        <tr>
+            <td><strong>Local:1:I.Pt14.Data</strong></td>
+            <td>BOOL</td>
+            <td>Vészstop (E-Stop) bemenet.</td>
+        </tr>
+    </table>
+</section>
 
     <section class="mainsection">
         <h3>Logikai megvalósítás (Létradiagram)</h3>

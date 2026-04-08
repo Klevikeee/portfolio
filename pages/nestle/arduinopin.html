@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió - Jelszavas LED Vezérlő</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="../../index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">MIKROVEZÉRLŐK PROGRAMOZÁSA</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>Biztonsági záras LED vezérlő (Keypad + I2C LCD)</h2>
+        <h3>Feladat leírása:</h3>
+        <ul>
+            <li>Egy 4x4-es mátrix billentyűzet (Keypad) és egy 16x2-es I2C LCD kijelző segítségével egy PIN-kódos beléptető rendszer szimulálása.</li>
+            <li>A rendszer egy 4 számjegyű kódot kér a felhasználótól. Az alapértelmezett PIN kód (6767), amelyet az Arduino belső <strong>EEPROM</strong> memóriájában tárol, így áramszünet (vagy újraindítás) esetén sem felejti el a beállított jelszót.</li>
+            <li>Sikeres belépés után a felhasználó a billentyűzet gombjaival (1-8) különböző LED-eket vagy LED-csoportokat kapcsolhat fel, a '0' gombbal pedig lekapcsolhatja az összeset.</li>
+            <li>A '*' gomb megnyomásával bármikor biztonságosan ki lehet jelentkezni a rendszerből (a LED-ek ilyenkor lekapcsolnak).</li>
+            <li>A 'C' gomb megnyomásával a bejelentkezett felhasználó megváltoztathatja a PIN kódot, amit a rendszer azonnal elment az EEPROM-ba.</li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Kép és Videó a működésről:</h3>
+        <div class="media-container">
+            <img src="../../images/arduinopin.jpeg" alt="A megépített áramkör fotója" class="kozep zoom">
+            <br><br>
+            <video controls>
+                <source src="../../videos/arduinopinvid.MOV" type="video/mp4">
+            </video>
+        </div>
+    </section>
+
+    <section class="mainsection">
+    <h3>Megvalósítás:</h3>
+    <p>A projekt három fő külső könyvtárra épül: a <strong>Keypad.h</strong> a hardveres gombbeolvasásért felel, a <strong>LiquidCrystal_I2C.h</strong> a kijelző mindössze két adatvezetéken (SDA, SCL) történő vezérlését végzi, az <strong>EEPROM.h</strong> pedig a jelszó tárolását biztosítja.</p>
+    <p>A kód gerincét egy állapotgép (State Machine) adja a <strong>loop()</strong> függvényben, amely a <strong>belepve</strong> logikai változó alapján dönti el, hogy a felhasználótól a jelszót várja (hitelesítési fázis), vagy már a vezérlőparancsokat fogadja. A LED-ek a D2-D5 és a D10-D13 digitális lábakra lettek bekötve, a Keypad pedig analóg (A0-A3 sorok) és digitális (D6-D9 oszlopok) lábakat használ.</p>
+    
+    <h4>A vezérlő forráskódja:</h4>
+<pre><code>#include &lt;Keypad.h&gt;
+#include &lt;LiquidCrystal_I2C.h&gt;
+#include &lt;Wire.h&gt;
+#include &lt;EEPROM.h&gt;
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+const byte ROWS = 4;
+const byte COLS = 4;
+
+char keys[ROWS][COLS] = {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+
+byte rowPins[ROWS] = {A0, A1, A2, A3};
+byte colPins[COLS] = {6, 7, 8, 9};
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+String helyeskod = "";
+String beirtkod = "";
+String ujkod = "";
+bool belepve = false;
+bool kodmodositas = false;
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+  Serial.begin(9600);
+
+  // EEPROM kód beolvasása, ha nem szám, alapértelmezett "6767" beállítása
+  for (int i = 0; i &lt; 4; i++) {
+    char c = EEPROM.read(i);
+    if (c &gt;= '0' &amp;&amp; c &lt;= '9') {
+      helyeskod += c;
+    } else {
+      helyeskod = "6767";
+      break;
+    }
+  }
+
+  // LED lábak kimenetté alakítása
+  for (int i = 2; i = 5; i++) pinMode(i, OUTPUT);
+  for (int i = 10; i &lt;= 13; i++) pinMode(i, OUTPUT);
+}
+
+void loop() { 
+  if (!belepve) {
+    char kod = keypad.getKey();
+    lcd.setCursor(0, 0);
+    lcd.print("Add meg a kodot:");
+
+    if (kod &amp;&amp; kod &gt;= '0' &amp;&amp; kod &lt;= '9') {
+      if (beirtkod.length() &lt; 4) {
+        beirtkod += kod;
+        lcd.setCursor(5, 1);
+        lcd.print(beirtkod);
+      }
+
+      if (beirtkod.length() == 4) {
+        if (beirtkod == helyeskod) {
+          lcd.clear();
+          lcd.setCursor(5, 1);
+          lcd.print("OK");
+          delay(1500);
+          lcd.clear();
+          lcd.print("Valassz LED-et");
+          belepve = true;
+        } else {
+          lcd.clear();
+          lcd.setCursor(4, 1);
+          lcd.print("Rossz kod");
+          delay(1500);
+          lcd.clear();
+        }
+        beirtkod = "";
+      }
+    }
+  }
+  else {
+    char kod = keypad.getKey();
+
+    // Kijelentkezés
+    if (kod == '*') {
+      belepve = false;
+      beirtkod = "";
+      ujkod = "";
+      kodmodositas = false;
+      lcd.clear();
+      lcd.print("Kijelentkezve");
+      for (int i = 2; i &lt;= 5; i++) digitalWrite(i, LOW);
+      for (int i = 10; i &lt;= 13; i++) digitalWrite(i, LOW);
+      delay(1500);
+      lcd.clear();
+      return;
+    }
+
+    // Jelszó módosítása
+    if (kod == 'C') {
+      kodmodositas = true;
+      ujkod = "";
+      lcd.clear();
+      lcd.print("Uj PIN:");
+      return;
+    }
+
+    if (kodmodositas) {
+      if (kod &gt;= '0' &amp;&amp; kod &lt;= '9') {
+        if (ujkod.length() &lt; 4) {
+          ujkod += kod;
+          lcd.setCursor(0, 1);
+          lcd.print(ujkod);
+        }
+
+        if (ujkod.length() == 4) {
+          helyeskod = ujkod;
+          for (int i = 0; i &lt; 4; i++) {
+            EEPROM.write(i, ujkod[i]);
+          }
+          kodmodositas = false;
+          lcd.clear();
+          lcd.print("PIN mentve");
+          delay(1500);
+          lcd.clear();
+          lcd.print("Valassz LED-et");
+        }
+      }
+      return;
+    }
+
+    // LED-ek vezérlése (1-8, 0)
+    if (kod &gt;= '0' &amp;&amp; kod &lt;= '9') {
+      if (kod == '1') {
+        digitalWrite(2, HIGH);
+        for (int i = 3; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '2') {
+        digitalWrite(2, HIGH); digitalWrite(3, HIGH);
+        for (int i = 4; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '3') {
+        digitalWrite(2, HIGH); digitalWrite(3, HIGH); digitalWrite(4, HIGH);
+        for (int i = 5; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '4') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, HIGH);
+        for (int i = 6; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '5') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, HIGH);
+        digitalWrite(10, HIGH);
+        for (int i = 6; i &lt;= 9; i++) digitalWrite(i, LOW);
+        for (int i = 11; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '6') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, HIGH);
+        digitalWrite(10, HIGH);
+        digitalWrite(13, HIGH);
+        digitalWrite(11, LOW);
+        digitalWrite(12, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '7') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, HIGH);
+        digitalWrite(10, HIGH);
+        digitalWrite(13, HIGH);
+        digitalWrite(11, HIGH);
+        digitalWrite(12, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);
+      } else if (kod == '8') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, HIGH);
+        digitalWrite(10, HIGH);
+        digitalWrite(13, HIGH);
+        digitalWrite(11, HIGH);
+        digitalWrite(12, HIGH);
+        lcd.setCursor(0,1);
+        lcd.print("Felkapcsolva :");
+        lcd.print(kod);        
+      } else if (kod == '0') {
+        for (int i = 2; i &lt;= 5; i++) digitalWrite(i, LOW);
+        for (int i = 10; i &lt;= 13; i++) digitalWrite(i, LOW);
+        lcd.setCursor(0,1);
+        lcd.print("Osszes lekapcsolva"); 
+      }
+    }
+  }
+}</code></pre>
+    </section>
+
+</body>
+</html>
