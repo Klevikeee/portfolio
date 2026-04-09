@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+
+<body class="mainbody">
+
+    <header class="navbar">
+        <a href="../../index.html" class="homegomb">← Portfólió</a>
+        <span class="cimsor">PLC programozás</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>EasyVeep – Parkolóház vezérlés (MODBUS)</h2>
+
+        <h3>Feladat leírása:</h3>
+        <ul>
+            <li>A rendszer egy automatikus parkolóház működését szimulálja.</li>
+            <li>A járművek belépése és kilépése sorompókkal és jelzőlámpákkal történik.</li>
+            <li>Belépés csak akkor engedélyezett, ha a sorompó nyitva van és a lámpa zöld.</li>
+            <li>Kilépés ugyanilyen feltételekkel történik a másik oldalon.</li>
+            <li>A rendszer egy munkahengert is vezérel:
+                <ul>
+                    <li>Belépéskor pozitív véghelyzetbe áll</li>
+                    <li>Kilépéskor negatív véghelyzetbe áll</li>
+                </ul>
+            </li>
+            <li>A PLC egy másik PLC-vel kommunikál MODBUS TCP protokollon keresztül.</li>
+        </ul>
+    </section>
+
+
+    <section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>
+            A vezérlés Siemens S7-1200 PLC-n, LAD (létra) programozási nyelven készült.
+            A rendszer alapját a sorompók és jelzőlámpák logikai vezérlése adja, amely biztosítja,
+            hogy a járművek csak biztonságos körülmények között haladhassanak át.
+        </p>
+
+        <p>
+            A belépési oldalon, ha egy jármű érzékelésre kerül, a PLC aktiválja a sorompót és
+            zöld jelzést ad. Ugyanez történik a kilépési oldalon is. A piros és zöld lámpák
+            egymást kizárva működnek, így elkerülhető a hibás jelzés.
+        </p>
+
+        <p>
+            A rendszer tartalmaz PLC–PLC kommunikációt is, amely MODBUS TCP protokollon keresztül valósul meg.
+            Az MB_CLIENT funkcióblokk segítségével a PLC adatokat küld egy másik vezérlőnek.
+        </p>
+
+        <p>
+            A kommunikáció során:
+        </p>
+        <ul>
+            <li>Belépéskor 2-es érték kerül elküldésre</li>
+            <li>Kilépéskor 1-es érték kerül elküldésre</li>
+        </ul>
+
+        <p>
+            Az adatküldés MOVE utasításokkal történik, majd egy adatblokkon keresztül jut el
+            a kommunikációs blokkhoz.
+        </p>
+
+        <p>
+            A program időzítéseket is alkalmaz (TON és TOF), amelyek a jelek stabilizálását
+            és a kommunikáció megbízhatóságát segítik.
+        </p>
+
+        <p>
+            A munkahenger vezérlése a járműmozgáshoz kapcsolódik:
+        </p>
+        <ul>
+            <li>Belépő jármű → pozitív véghelyzet</li>
+            <li>Kilépő jármű → negatív véghelyzet</li>
+        </ul>
+
+        <p>
+            A teljes rendszer egy egyszerű, de jól strukturált ipari automatizálási feladatot modellez,
+            amely tartalmaz digitális vezérlést, kommunikációt és aktuátor kezelést is.
+        </p>
+    </section>
+
+    <section class="mainsection">
+        <h3>Kliens</h3>
+        <h4>Létradiagramok</h4>
+        <img src="../../images/modbuskliens1.png" class="kozep zoom">
+        <img src="../../images/modbuskliens2.png" class="kozep zoom">
+        <h4>Connect datablock</h4>
+        <img src="../../images/modbuskliens3.png" class="kozep zoom">
+        <h4>Adat datablock</h4>
+        <img src="../../images/modbuskliens4.png" class="kozep zoom">
+        <h4>Tag táblázat</h4>
+        <img src="../../images/modbuskliens5.png" class="kozep zoom">
+    </section>
+
+    <section class="mainsection">
+        <h3>Szerver</h3>
+        <h4>Létradiagramok</h4>
+        <img src="../../images/modbusserver1.png" class="kozep zoom">
+        <img src="../../images/modbusserver2.png" class="kozep zoom">
+        <h4>Connect datablock</h4>
+        <img src="../../images/modbusserver3.png" class="kozep zoom">
+        <h4>Adat datablock</h4>
+        <img src="../../images/modbusserver4.png" class="kozep zoom">
+        <h4>Tag táblázat</h4>
+        <img src="../../images/modbusserver5.png" class="kozep zoom">
+    </section>
+        <section class="mainsection">
+        <h3>Videó a projektről</h3>
+            <div>
+                <iframe src="https://drive.google.com/file/d/1gZJeTSSsSxsFW97jpc2Tb7SQyzFaIboy/preview" style="width: 100%; height: 480px; border: none; border-radius: 8px;" allow="autoplay"></iframe>
+            </div>
+       </section>
+    
+</body>
+
+</html>
