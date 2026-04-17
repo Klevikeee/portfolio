@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="../../index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">IoT</span>
+    </header>
+    <section class="mainsection">
+        <h2>Automata öntözőrendszer vezérlése</h2>
+        <h3>Feladat leirása:</h3>
+        <ul>
+            <li>
+                Az öntöző rendszer célja, hogy egy nedvesség érzékelő segítségével automatikusan
+                megöntözze az adott növényt.
+                Ha 40% alá megy a növény földjének nedvessége akkor a szivattyú segítségével
+                megöntözzük a földet egy adott nedvességig.
+                Dashboardon keresztül lehessen vezérelni, állítani az öntözést, akár manuálisan be / ki
+                kapcsolni.
+                A minimum / maximum nedvességet az öntözéshez lehessen állítani
+                A raspberry pico mikrovezérlő 15 percenként gyűjtsön adatokat a növény földjének
+                nedvességéről és ezt egy táblázatba jelenítse meg a dashboardon
+            </li>
+
+            <li>
+                Szakmaibb szemmel nézve:
+                A projekt "agya" a node-red flow-ban rejlik. A Pico csak adatot küld, és utasítást fogad.
+                Az adatok feldolgozását, megjelenítését, skálázását százalékos értékké a node-red csinálja.
+                A vezérlőgombok, az indítási és leállítási értékeket pedig a node-red dashboardján lehet állítani,
+                akár manuálisan be és ki kapcsolni az öntözést
+                
+            </li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+    <h3>Alkatrészlista:</h3>
+    <ul>
+        <li>Raspberry Pico W 2</li>
+        <li>Relé modul</li>
+        <li>Nedvesség szenzor</li>
+        <li>Breadboard</li>
+        <li>Vezetékek</li>
+        <li>Mini vízpumpa és cső</li>
+        <li>Elemtartó (3X AA)</li>
+    </ul>
+    </section>
+
+    <section class="mainsection">
+        <h3>Kapcsolási rajz</h3>
+        <img src="../../images/bekotesirajz.png" class="kozep zoom">
+    
+    </section>
+
+    <section class="mainsection">
+        <h3>Node-RED flow</h3>
+        <img src="../../images/noderedflow.png" class="kozep zoom">
+    </section>
+
+
+    <section class="mainsection">
+        <h3>MicroPython programkód</h3>
+        <pre><code>
+import time
+import network
+import machine
+from umqtt.simple import MQTTClient
+from machine import Pin, ADC
+
+# pinek
+RELE_PIN = 4
+SZENZOR_PIN = 26
+
+rele = Pin(RELE_PIN, Pin.OUT)
+led = Pin("LED", Pin.OUT)
+szenzor = ADC(Pin(SZENZOR_PIN))
+
+rele.value(1)
+
+# wifi es mqtt
+SSID = "Kovács iPhone-ja"
+PASSWORD = "jelszo123"
+
+SERVER = "172.20.10.13"
+CLIENT_ID = b"ontozo"
+TOPIC_N = b"tele/nedvesseg"
+TOPIC_V = b"vez/rele"
+
+wlan = network.WLAN(network.STA_IF)
+wlan.active(True)
+wlan.connect(SSID, PASSWORD)
+
+print("Csatlakozás a Wi-Fi-hez")
+
+while not wlan.isconnected():
+    pass
+
+print(f"\nSikerült csatlakozni a Wi-Fihez, IP cím: {wlan.ifconfig()[0]}")
+
+def mqtt_connect():
+    try:
+        client = MQTTClient(CLIENT_ID, SERVER, keepalive=60)
+        client.set_callback(on_message)
+        client.connect()
+        client.subscribe(TOPIC_V)
+        print("MQTT OK")
+        return client
+    except:
+        print("MQTT hiba")
+        return None 
+
+def mqtt_reconnect():
+    print("Nem sikerült kapcsolódni az MQTT szerverhez")
+    time.sleep(5)
+    machine.reset()
+
+def mqtt_pub_message(mqtt_client):
+    nyers_ertek = szenzor.read_u16()
+    ertek = nyers_ertek >> 4      
+    adat = str(ertek)
+    print(f"Küldés MQTT-n: {adat}")
+    mqtt_client.publish(TOPIC_N,str(adat))
+def on_message(topic,msg):
+    print(msg)
+    if topic == TOPIC_V:
+        if msg == b"0":
+            rele.value(0)
+        elif msg == b"1":
+            rele.value(1)
+try:
+    client = mqtt_connect()
+    
+except OSError as error:
+    print(error)
+    mqtt_reconnect()
+
+client = None
+
+while True:
+
+    if not wlan.isconnected():
+        wifi_connect()
+        client = None
+
+    if client is None:
+        client = mqtt_connect()
+
+    try:
+        if client:
+            client.check_msg()
+            mqtt_pub_message(client)
+
+    except Exception as e:
+        print("Hiba:", e)
+        client = None  
+    led.value(0)
+    time.sleep(3)
+    led.value(1)
+
+        </code></pre>
+    </section>
+</body>
+    <section class="mainsection">
+        <h3>Videó a szimulációról</h3>
+            <div>
+                    <iframe src="https://drive.google.com/file/d/1SPjEaV_qKgHxFBiST43WWw7-JgNEIWeQ/preview" style="width: 100%; height: 480px; border: none; border-radius: 8px;" allow="autoplay"></iframe>
+                </div>
+       </section>
+
+</html>
+
