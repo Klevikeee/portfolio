@@ -155,30 +155,27 @@ table {
         font-family: Arial, sans-serif;
     }
     th, td {
-        border: 1px solid #ccc; /* Szürke keret */
+        border: 1px solid #ccc; 
         padding: 10px;
-        text-align: center; /* Középre igazítás */
+        text-align: center; 
     }
     th {
-        background-color: #f9f9f9; /* Halvány háttér a fejlécnek */
+        background-color: #f9f9f9;
         font-weight: bold;
     }
-    /* Az első oszlop (Eszköz neve) legyen balra igazítva, ahogy általában szokás */
     td:first-child {
         text-align: left;
     }
-/* A tároló, ami korlátozza a szélességet, de engedi kicsinyíteni */
 .video-container {
-    width: 90%;            /* Mobilnézetben ne érjen teljesen a széléhez */
-    max-width: 800px;      /* Nagy monitoron ne legyen indokolatlanul hatalmas */
-    margin: 20px auto;     /* Középre igazítás */
+    width: 90%;            
+    max-width: 800px;      
+    margin: 20px auto;
     display: block;
 }
 
-/* Maga a videó elem */
 video {
-    width: 100% !important;  /* Mindig töltse ki a tárolóját */
-    height: auto !important; /* Ez tartja meg a méretarányt! */
-    border-radius: 10px;     /* Opcionális: szebb, lekerekített sarkok */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Opcionális: mélységet ad neki */
+    width: 100% !important; 
+    height: auto !important; 
+    border-radius: 10px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
