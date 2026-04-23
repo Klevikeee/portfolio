@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió - Elektropneumatika</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="../../index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">Pneumatika</span>
+    </header>
+
+    <section class="mainsection">
+        <h2>Elektropneumatikus kapcsolás</h2>
+        <h3>Feladat leírása:</h3>
+        <ul>
+            <li>
+                Egy kettős működésű pneumatikus munkahenger vezérlése a feladat.
+            </li>
+            <li>
+                A folyamat egy indítógombbal (S1) indul, amely öntartást kap.
+            </li>
+            <li>
+                A hengernek automatikusan ki kell futnia a külső végállásig (A1), majd ott egy meghatározott ideig várakoznia kell.
+            </li>
+            <li>
+                A várakozási idő letelte után a hengernek automatikusan vissza kell térnie az alaphelyzetbe (A0).
+            </li>
+            <li>
+                A rendszer bármikor leállítható a stop gombbal (S2).
+            </li>
+        </ul>
+    </section>
+
+    <section class="mainsection">
+    <h3>Megvalósítás:</h3>
+    <p>
+        A kapcsolás villamos és pneumatikus részből áll. Az 1-es és 2-es áramút biztosítja az öntartást a K1 relével: az S1 gomb megnyomásakor K1 meghúz, és a párhuzamosan kötött záróérintkezője fenntartja az áramkört S2 bontásáig.
+    </p>
+    <p>
+        A henger mozgását két reed-érzékelő figyeli. Az A0 (alaphelyzet) érzékelése aktiválja a K2 relét, míg az A1 (külső végállás) aktiválja a K3 időrelét. A pneumatikus munkahengert egy 5/2-es kétoldali villamos vezérlésű szelep irányítja (Y1 és Y2 tekercsek).
+    </p>
+    <p>
+        A munkafolyamat során az időzítő (K3) késleltetve ad jelet a visszahúzó tekercsnek (Y2), így biztosítva a technológiai várakozást a külső végponton. A pneumatikus körben egy fojtó-visszacsapó szelep is beépítésre került a sebesség szabályozása érdekében.
+    </p>
+    </section>
+
+
+<section class="mainsection">
+    <h3>Kapcsolási rajzok:</h3>
+    <h4>Pneumatikus és kapcsolás</h4>
+    <img src="/images/elektropneumatika.jpg" class="kozep zoom">
+</section>
+<section class="mainsection">
+    <h3>Videó a projektről</h3>
+    <div>
+        <iframe src="https://drive.google.com/file/d/1JC4_6QlhAb_ZnIQvQjhNSeHRpCLbShsh/preview" style="width: 100%; height: 480px; border: none; border-radius: 8px;" allow="autoplay"></iframe>
+    </div>
+</section>    
+</body>
+
+<footer>
+    <hr>
+    <p>Készítette : Kovács Levente Lajos</p>
+</footer>
+
+</html>

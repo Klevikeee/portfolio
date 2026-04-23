@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfólió</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <script src="../../js/script.js"></script>
+</head>
+<body class="mainbody">
+    
+    <header class="navbar">
+    <a href="../../index.html" class="homegomb">← Portfólió</a>
+    <span class="cimsor">Pneumatika</span>
+    </header>
+<section class="mainsection">
+    <h2>Elektropneumatikus kapcsolás</h2>
+    <h3>Feladat leírása:</h3>
+    <ul>
+        <li>
+            Egy kettős működtetésű munkahenger vezérlése elektropneumatikus úton.
+        </li>
+        <li>
+            A henger előre és hátra mozgását mágnesszelepek vezérlik.
+        </li>
+        <li>
+            A végállásokat érzékelők (1B1, 1B2) figyelik.
+        </li>
+        <li>
+            Nyomógombokkal (S1 – indítás, S2 – leállítás) történik a vezérlés.
+        </li>
+        <li>
+            A rendszer relékkel (K1, K2, K3) van megvalósítva.
+        </li>
+    </ul>
+</section>
+
+    <section class="mainsection">
+        <h3>Megvalósítás:</h3>
+        <p>
+            A rendszer működése egy S1 indítógombbal kezdődik, amely meghúzza a K1 relét.
+            A K1 relé öntartó áramkört hoz létre, így a gomb elengedése után is aktív marad.
+        </p>
+
+        <p>
+            A henger alaphelyzetét az 1B1 végálláskapcsoló jelzi. Innen indul a mozgás.
+            A K2 relé aktiválásával a 1M1 mágnesszelep működésbe lép, amely előre mozgatja a hengert.
+        </p>
+
+        <p>
+            Amikor a henger eléri a másik végállást (1B2), az aktiválja a K3 relét.
+            Ez átkapcsolja a vezérlést a másik mágnesszelepre (1M2), így a henger visszamozdul.
+        </p>
+
+        <p>
+            A rendszer ciklikusan működhet a végálláskapcsolók segítségével, vagy a S2 leállító gombbal megszakítható,
+            amely bontja a K1 relé áramkörét és leállítja az egész folyamatot.
+        </p>
+
+        <p>
+            A pneumatikus rész egy 5/2-es útszelep segítségével vezérli a kettős működtetésű hengert,
+            a fojtószelepek pedig a mozgás sebességének szabályozására szolgálnak.
+        </p>
+</section>
+<section class="mainsection">
+    <h3>Főbb elemek:</h3>
+        <ul>
+            <li>Kettős működtetésű munkahenger</li>
+            <li>5/2-es mágnesszelep (1M1, 1M2)</li>
+            <li>Végálláskapcsolók (1B1, 1B2)</li>
+            <li>Relék (K1, K2, K3)</li>
+            <li>Nyomógombok (S1, S2)</li>
+            <li>Fojtó-visszacsapó szelepek</li>
+        </ul>
+</section>
+
+<section class="mainsection">
+    <h3>Kapcsolási rajzok:</h3>
+    <h4>Pneumatikus kapcsolás</h4>
+    <img src="/images/pneumatika.png" class="kozep zoom">
+    <h4>Villamos kapcsolás</h4>
+    <img src="/images/elektromos.png" class="kozep zoom">
+</section>
+<section class="mainsection">
+    <h3>Videó a projektről</h3>
+    <div>
+        <iframe src="https://drive.google.com/file/d/1KcV81pjkjaT89QSin1NoLZ44RJWqkoNi/preview" style="width: 100%; height: 480px; border: none; border-radius: 8px;" allow="autoplay"></iframe>
+    </div>
+</section>
+
+<footer>
+    <hr>
+    <p>Készítette : Kovács Levente Lajos</p>
+
+</footer>
+
+</html>
+
